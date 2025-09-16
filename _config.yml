@@ -1,0 +1,48 @@
+### Site Settings ###
+title       : Prudhvi's Portfolio
+description : Just a curious Embedded Engineer
+baseurl     : ""    # leave empty for <username>.github.io
+repository  : prudhvibelide/prudhvibelide.github.io
+open_new_tab: true
+
+### Plugins ###
+plugins:
+  - jemoji
+
+### Navbar Settings ###
+nav_exclude:
+  - pages/404.html
+  - pages/index.md
+  - documentation/**
+  - elements/**
+
+### Author Info ###
+author:
+  name     : Prudhvi Raj Belide
+  image    : assets/img/profile.jpg
+  github   : prudhvibelide
+  linkedin : prudhvibelide10
+
+### Posts ###
+permalink: /blog/:title
+
+### Collections ###
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name
+
+### Analytics ###
+analytics:
+  enabled: false
+  google:
+    tracking_id: ""
+
+### Exclude from processing ###
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - LICENSE
+  - "*.log"
+  - docs/
+  - test/
