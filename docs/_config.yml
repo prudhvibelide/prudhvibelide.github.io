@@ -3,7 +3,7 @@ title               : Prudhvi Raj Belide
 description         : >-
                       Embedded Software Student | Projects, Skills & Portfolio
 baseurl             : ""                                # keep empty if repo is <username>.github.io
-repository          : prudhvi-b007/prudhvi-b007.github.io
+repository          : https://prudhvibelide.github.io/
 remote_theme        : 
 open_new_tab        : true                              # external links open in new tab
 
