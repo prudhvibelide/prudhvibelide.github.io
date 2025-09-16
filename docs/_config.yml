@@ -1,10 +1,9 @@
 ### Site Settings ###
-title               : Prudhvi's Portfolio
-description         : >-
-                      Just a curious Embedded Engineer w
-baseurl             : ""            # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
-repository          : prudhvibelide/prudhvibelide.github.io      
-open_new_tab        : false                    # Opens external URLs in new tab (works for posts, projects and navbar only)
+title       : Prudhvi's Portfolio
+description : Just a curious Embedded Engineer
+baseurl     : ""    # empty for <username>.github.io
+repository  : prudhvibelide/prudhvibelide.github.io
+open_new_tab: true
 
 
 ### Plugins ###
@@ -13,36 +12,19 @@ plugins:
 
 
 ### Navbar Settings ###
-nav_exclude:                                            # The following paths are excluded from navbar
-  - pages/tags.html
+nav_exclude:
   - pages/404.html
   - pages/index.md
-  - documentation/partials/**                           # For Documentation Only
+  - documentation/**
+  - elements/**
 
 
 ### Author Info ###
 author:
-  name              : Prudhvi Raj Belide
-  image             : assets/img/profile.jpg
-#  behance           : your_username
-# dribbble          : your_username
-  #email             : username@domain.com
-  #facebook          : your_username
-  github            : prudhvibelide
-# gitlab            : your_username
-# instagram         : your_username
-# kaggle            : your_username
-  linkedin          : prudhvibelide10
- # medium            : your_username
-# soundcloud        : your_username
-# spotify           : your_username
-# stackoverflow     : your_user_id
-# tumblr            : your_username.tumblr.com
-# twitch            : your_username
- # twitter           : your_username
-# vimeo             : your_username
-# youtube           : your_channel_name
-# keybase           : your_username
+  name     : Prudhvi Raj Belide
+  image    : assets/img/profile.jpg
+  github   : prudhvibelide
+  linkedin : prudhvibelide10
 
 
 ### Posts ###
@@ -54,29 +36,26 @@ collections:
   projects:
     output: true
     permalink: /projects/:name
-  elements:                                             # For Documentation Only
-    output: true                                        # For Documentation Only
 
 
 ### Disqus ###
 disqus:
-  shortname: your-short-name-disqus                     # Your website Shortname on disqus
+  shortname: your-short-name-disqus
 
 
 ### Analytics ###
 analytics:
-  enabled: false                                        # Set true to enable analytics
+  enabled: false
   google:
     tracking_id: your-google-tracking-id
 
 
 ### Buy me a coffee ###
-# See https://www.buymeacoffee.com/
 buymeacoffee:
   enabled: false
   username: your_username
   color: "#007bff"
-  message: "Thank you for visiting."                    # Message to be displayed aside from the button for a few seconds.
+  message: "Thank you for visiting."
   description: "Support me on Buy me a coffee!"
 
 
@@ -87,16 +66,11 @@ defaults:
       type: "projects"
     values:
       layout: "page"
-  - scope:                                              # For Documentation Only
-      path: ""                                          # For Documentation Only
-      type: "elements"                                  # For Documentation Only
-    values:                                             # For Documentation Only
-      layout: "element"                                 # For Documentation Only
   - scope:
       path: ""
       type: "posts"
     values:
-      comments: false                                   # Set to true to enable disqus comments
+      comments: false
 
 
 ### Exclude from processing ###
@@ -105,10 +79,6 @@ exclude:
   - CONTRIBUTING.md
   - LICENSE
   - "*.log"
-  
-  ### Navbar Settings ###
-nav_exclude:
-  - pages/404.html
-  - pages/index.md
-  - documentation/**
-  - elements/**
+  - docs/
+  - test/
+
