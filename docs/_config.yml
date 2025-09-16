@@ -1,84 +1,33 @@
-### Site Settings ###
-title       : Prudhvi's Portfolio
-description : Just a curious Embedded Engineer
-baseurl     : ""    # empty for <username>.github.io
-repository  : prudhvibelide/prudhvibelide.github.io
+title: Prudhvi's Portfolio
+description: Curious Embedded Engineer
+baseurl: ""                      # user site needs empty
+repository: prudhvibelide/prudhvibelide.github.io
 open_new_tab: true
 
+plugins: [jemoji]
 
-### Plugins ###
-plugins:
-  - jemoji
-
-
-### Navbar Settings ###
 nav_exclude:
   - pages/404.html
   - pages/index.md
-  - documentation/**
+  - docs/**
   - elements/**
 
-
-### Author Info ###
 author:
-  name     : Prudhvi Raj Belide
-  image    : assets/img/profile.jpg
-  github   : prudhvibelide
-  linkedin : prudhvibelide10
+  name: Prudhvi Raj Belide
+  image: assets/img/profile.jpg
+  github: prudhvibelide
+  linkedin: prudhvibelide10
 
-
-### Posts ###
 permalink: /blog/:title
 
-
-### Collections ###
 collections:
   projects:
     output: true
     permalink: /projects/:name
 
-
-### Disqus ###
-disqus:
-  shortname: your-short-name-disqus
-
-
-### Analytics ###
-analytics:
-  enabled: false
-  google:
-    tracking_id: your-google-tracking-id
-
-
-### Buy me a coffee ###
-buymeacoffee:
-  enabled: false
-  username: your_username
-  color: "#007bff"
-  message: "Thank you for visiting."
-  description: "Support me on Buy me a coffee!"
-
-
-### Defaults for collections ###
-defaults:
-  - scope:
-      path: ""
-      type: "projects"
-    values:
-      layout: "page"
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      comments: false
-
-
-### Exclude from processing ###
 exclude:
   - README.md
-  - CONTRIBUTING.md
   - LICENSE
   - "*.log"
   - docs/
   - test/
-

@@ -1,15 +1,8 @@
-<div class="row justify-content-center align-items-center p-4">
-  <div class="col-lg-4 col-md-6 text-center mt-4">
-
-    <!-- Fine Circle Responsive Image -->
-    <div id="container" class="my-2">
-      <div id="dummy"></div>
-      <div id="element">
-        <img src="{{ site.author.image }}" alt="{{ site.title }}" class="circle-image wow animated zoomIn" data-wow-delay=".1s">
-      </div>
-    </div>
-
-    <p class="text-muted wow animated slideInUp" data-wow-delay=".15s">{{ site.description }}</p>
-
-  </div>
-</div>
+<section class="text-center mt-5">
+  <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Prudhvi Raj Belide"
+       class="rounded-circle mb-3" width="200">
+  <h1 class="mb-3">Prudhvi Raj Belide</h1>
+  <p class="lead mb-4">Curious Embedded Engineer</p>
+  <a href="/projects/" class="btn btn-primary btn-lg mr-2">View My Projects</a>
+  <a href="/blog/" class="btn btn-outline-secondary btn-lg">Read My Blog</a>
+</section>
