@@ -1,0 +1,748 @@
+import React, { useState, useEffect } from 'react';
+import { Search, Plus, Menu, Home, Calendar, FileText, Package, AlertCircle, Phone, Users, Settings, ChevronDown, Edit, Trash2, Filter, Download, Bell, Mail, Clock, MapPin, CheckCircle, XCircle, TrendingUp, Activity, BarChart3, User } from 'lucide-react';
+
+const ConferenceServicesDesk = () => {
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterBuilding, setFilterBuilding] = useState('all');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [notifications, setNotifications] = useState(3);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Sample data
+  const [deskLogs, setDeskLogs] = useState([
+    { id: 1, date: '6/14/2024', author: 'Grace Smith', building: 'Willard Hall', note: 'All vending machines go out of order, the service number to call is (303) 492-8821', status: 'Active', priority: 'High', year: '2024' },
+    { id: 2, date: '6/5/2024', author: 'Atley Van Emmerk', building: 'Baker Hall', note: 'Linen Package Materials = Basic: Sheets, pillow, pillowcase. Extended (VIP): Basic + blanket, towel, and daily towel exchange', status: 'Info', priority: 'Medium', year: '2024' },
+    { id: 3, date: '5/30/2024', author: 'Nicole Gibson', building: 'Farrand Hall', note: 'Staff members cannot take items meant to be checked out without proper checkout procedure. Employees have been accessing items through back entrance.', status: 'Resolved', priority: 'High', year: '2024' },
+    { id: 4, date: '5/22/2024', author: 'Khushi Shah', building: 'Williams Village', note: 'There are 5 HDMI cables in the miscellaneous drawer. Make sure to take an ID when giving these out to guests.', status: 'Info', priority: 'Low', year: '2024' },
+  ]);
+
+  const [equipmentLog, setEquipmentLog] = useState([
+    { id: 1, guest: 'Jacob Lindblom', group: 'Summer Conference', item: 'Ping pong paddle (2) and balls', building: 'Willard Hall', room: '315', dateOut: '6/8/2024 6:42 AM', checkOut: 'Ash B', status: 'Returned', dateIn: '6/8/2024 7:06 AM', checkIn: 'Ash B', notes: 'Equipment damaged - ball cracked', year: '2024' },
+    { id: 2, guest: 'Elisa Foley', group: 'Academic Workshop', item: 'HDMI CORD', building: 'Baker Hall', room: 'BAKER-0211-A1', dateOut: '6/9/2024 8:09 AM', checkOut: 'Angel Cavazos', status: 'Out', year: '2024' },
+    { id: 3, guest: 'Ryleigh Lindstrom', group: 'Faculty Assistant', item: 'Rolling Cart', building: 'Farrand Hall', room: '238', dateOut: '7/18/2024 3:29 PM', checkOut: 'Carrie Wehrman', status: 'Out', year: '2024' },
+    { id: 4, guest: 'Mohammed Anas', group: 'Summer Staff', item: 'Pool Equipment Set', building: 'Williams Village', room: '0217-A', dateOut: '7/25/2024 7:55 PM', checkOut: 'Madiha Munawar', status: 'Out', year: '2024' },
+  ]);
+
+  const [lostFound, setLostFound] = useState([
+    { id: 1, item: 'Bronze Key', type: 'Lost', date: '8/3/2024 8:00 PM', building: 'Willard Hall', where: 'Unknown', guest: 'Madiha Munawar', address: 'Campus Store Employee', phone: '3083400310', status: 'Unclaimed', year: '2024' },
+    { id: 2, item: '1 gold key labeled BB70', type: 'Found', date: '8/3/2024 5:15 PM', building: 'Baker Hall', where: 'Welcome Center', guest: 'Morgan King', status: 'At Desk', year: '2024' },
+    { id: 3, item: '2 silver keys', type: 'Found', date: '7/25/2024 3:15 PM', building: 'Farrand Hall', where: 'East walkway entrance', guest: 'Kristen Nieves', status: 'At Desk', year: '2024' },
+    { id: 4, item: 'iPhone 13', type: 'Found', date: '7/23/2024 1:30 PM', building: 'Williams Village', where: 'Common Area', guest: 'Matthew Dahlke', status: 'Claimed', year: '2024' },
+    { id: 5, item: 'Backpack (black)', type: 'Found', date: '7/20/2024 9:36 PM', building: 'Willard Hall', where: 'Study Room 2', guest: 'Abby Flaugh', status: 'At Desk', year: '2024' },
+  ]);
+
+  const [packages, setPackages] = useState([
+    { id: 1, recipient: 'Sarah Johnson', dateReceived: '10/24/2024 9:15 AM', building: 'Willard Hall', carrier: 'UPS', location: 'Front Desk - Shelf A3', room: '412', status: 'Ready', notes: '', year: '2024' },
+    { id: 2, recipient: 'Michael Chen', dateReceived: '10/24/2024 10:30 AM', building: 'Baker Hall', carrier: 'FedEx', location: 'Package Room', room: '208', status: 'Notified', notes: 'Requires signature', year: '2024' },
+    { id: 3, recipient: 'Emma Rodriguez', dateReceived: '10/23/2024 2:45 PM', building: 'Farrand Hall', carrier: 'USPS', location: 'Front Desk - Shelf B1', room: '315', status: 'Picked Up', pickedUp: '10/24/2024 8:30 AM', year: '2024' },
+  ]);
+
+  const [maintenance, setMaintenance] = useState([
+    { id: 1, issue: 'Broken washing machine', building: 'Willard Hall', location: 'Laundry Room - Floor 3', priority: 'High', status: 'In Progress', reported: '10/24/2024 7:30 AM', reportedBy: 'Grace Smith' },
+    { id: 2, issue: 'Flickering hallway lights', building: 'Baker Hall', location: 'Floor 2 West Wing', priority: 'Medium', status: 'Pending', reported: '10/23/2024 9:15 PM', reportedBy: 'Angel Cavazos' },
+    { id: 3, issue: 'AC not working', building: 'Farrand Hall', location: 'Room 405', priority: 'High', status: 'Resolved', reported: '10/22/2024 3:20 PM', reportedBy: 'Nicole Gibson' },
+  ]);
+
+  const [visitors, setVisitors] = useState([
+    { id: 1, name: 'Dr. Jennifer Williams', purpose: 'Guest Speaker', building: 'Willard Hall', checkIn: '10/24/2024 9:00 AM', checkOut: null, host: 'Prof. Anderson', status: 'Checked In' },
+    { id: 2, name: 'Robert Thompson', purpose: 'Campus Tour', building: 'Baker Hall', checkIn: '10/24/2024 10:15 AM', checkOut: '10/24/2024 11:45 AM', host: 'Admissions Office', status: 'Checked Out' },
+  ]);
+
+  const buildings = ['Willard Hall', 'Baker Hall', 'Farrand Hall', 'Williams Village', 'Sewall Hall', 'Kittredge', 'Cheyenne Arapaho'];
+
+  const stats = [
+    { label: 'Active Equipment', value: equipmentLog.filter(e => e.status === 'Out').length, icon: Activity, color: 'bg-blue-500' },
+    { label: 'Pending Packages', value: packages.filter(p => p.status !== 'Picked Up').length, icon: Package, color: 'bg-purple-500' },
+    { label: 'Open Issues', value: maintenance.filter(m => m.status !== 'Resolved').length, icon: AlertCircle, color: 'bg-orange-500' },
+    { label: 'Items Found', value: lostFound.filter(l => l.type === 'Found' && l.status === 'At Desk').length, icon: CheckCircle, color: 'bg-green-500' },
+  ];
+
+  const getActiveData = () => {
+    switch(activeTab) {
+      case 'desk-log': return deskLogs;
+      case 'equipment': return equipmentLog;
+      case 'lost-found': return lostFound;
+      case 'packages': return packages;
+      case 'maintenance': return maintenance;
+      case 'visitors': return visitors;
+      default: return [];
+    }
+  };
+
+  const filteredData = getActiveData().filter(item => {
+    const matchesSearch = searchTerm === '' || 
+      Object.values(item).some(val => 
+        String(val).toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    const matchesBuilding = filterBuilding === 'all' || item.building === filterBuilding;
+    return matchesSearch && matchesBuilding;
+  });
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 border-b border-slate-700 sticky top-0 z-50 shadow-lg">
+        <div className="px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-xl rounded-lg shadow-md">
+              CU
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white tracking-tight">Conference Services eDesk</h1>
+              <p className="text-sm text-slate-300">University of Colorado Boulder</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search services..."
+                className="pl-10 pr-4 py-2.5 bg-slate-700 border border-slate-600 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-amber-500 text-white placeholder-slate-400"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-3 text-slate-300 text-sm">
+              <Clock className="w-4 h-4" />
+              <span>{currentTime.toLocaleTimeString()}</span>
+            </div>
+            <button className="relative p-2 hover:bg-slate-700 rounded-lg transition-colors">
+              <Bell className="w-5 h-5 text-slate-300" />
+              {notifications > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                  {notifications}
+                </span>
+              )}
+            </button>
+            <button className="p-2 hover:bg-slate-700 rounded-lg transition-colors">
+              <Settings className="w-5 h-5 text-slate-300" />
+            </button>
+            <div className="flex items-center gap-2 pl-3 border-l border-slate-600">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                AD
+              </div>
+              <span className="text-sm text-slate-300">Admin</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-72 bg-white border-r border-slate-200 min-h-screen p-4 shadow-sm">
+          <nav className="space-y-1">
+            <button 
+              onClick={() => setActiveTab('dashboard')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'dashboard' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <Home className="w-5 h-5" />
+              Dashboard
+            </button>
+            <button 
+              onClick={() => setActiveTab('desk-log')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'desk-log' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <FileText className="w-5 h-5" />
+              Desk Log
+            </button>
+            <button 
+              onClick={() => setActiveTab('equipment')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'equipment' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <Activity className="w-5 h-5" />
+              Equipment Checkout
+            </button>
+            <button 
+              onClick={() => setActiveTab('packages')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'packages' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <Package className="w-5 h-5" />
+              Package Management
+            </button>
+            <button 
+              onClick={() => setActiveTab('lost-found')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'lost-found' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <AlertCircle className="w-5 h-5" />
+              Lost & Found
+            </button>
+            <button 
+              onClick={() => setActiveTab('maintenance')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'maintenance' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <Settings className="w-5 h-5" />
+              Maintenance Requests
+            </button>
+            <button 
+              onClick={() => setActiveTab('visitors')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                activeTab === 'visitors' 
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <Users className="w-5 h-5" />
+              Visitor Management
+            </button>
+            
+            <div className="pt-6">
+              <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Quick Access</p>
+              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+                <Calendar className="w-4 h-4" />
+                Event Calendar
+              </button>
+              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+                <Phone className="w-4 h-4" />
+                Contact Directory
+              </button>
+              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+                <BarChart3 className="w-4 h-4" />
+                Reports & Analytics
+              </button>
+            </div>
+
+            <div className="pt-6 mt-6 border-t border-slate-200">
+              <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg p-4 border border-amber-200">
+                <h4 className="font-semibold text-sm text-amber-900 mb-1">Need Help?</h4>
+                <p className="text-xs text-amber-700 mb-3">Contact IT Support for assistance</p>
+                <button className="text-xs bg-amber-600 text-white px-3 py-1.5 rounded-md hover:bg-amber-700 transition-colors">
+                  Get Support
+                </button>
+              </div>
+            </div>
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          {activeTab === 'dashboard' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-800">Dashboard</h2>
+                  <p className="text-slate-600 mt-1">Overview of today's operations</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-slate-600">Current Date</p>
+                  <p className="text-lg font-semibold text-slate-800">{currentTime.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                </div>
+              </div>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {stats.map((stat, idx) => (
+                  <div key={idx} className="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-slate-600 mb-1">{stat.label}</p>
+                        <p className="text-3xl font-bold text-slate-800">{stat.value}</p>
+                      </div>
+                      <div className={`${stat.color} w-12 h-12 rounded-lg flex items-center justify-center shadow-md`}>
+                        <stat.icon className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Recent Activity */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-blue-600" />
+                    Recent Equipment Checkouts
+                  </h3>
+                  <div className="space-y-3">
+                    {equipmentLog.slice(0, 3).map((item) => (
+                      <div key={item.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
+                        <div className="flex-1">
+                          <p className="font-medium text-slate-800 text-sm">{item.item}</p>
+                          <p className="text-xs text-slate-600">{item.guest} • {item.building}</p>
+                        </div>
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+                          item.status === 'Out' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'
+                        }`}>
+                          {item.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                    <Package className="w-5 h-5 text-purple-600" />
+                    Pending Packages
+                  </h3>
+                  <div className="space-y-3">
+                    {packages.filter(p => p.status !== 'Picked Up').map((pkg) => (
+                      <div key={pkg.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
+                        <div className="flex-1">
+                          <p className="font-medium text-slate-800 text-sm">{pkg.recipient}</p>
+                          <p className="text-xs text-slate-600">{pkg.building} • Room {pkg.room}</p>
+                        </div>
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+                          pkg.status === 'Ready' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                        }`}>
+                          {pkg.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Maintenance & Alerts */}
+              <div className="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-orange-600" />
+                  Open Maintenance Issues
+                </h3>
+                <div className="space-y-3">
+                  {maintenance.filter(m => m.status !== 'Resolved').map((issue) => (
+                    <div key={issue.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="font-medium text-slate-800">{issue.issue}</p>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                            issue.priority === 'High' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
+                          }`}>
+                            {issue.priority}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-600">{issue.building} - {issue.location}</p>
+                        <p className="text-xs text-slate-500 mt-1">Reported: {issue.reported}</p>
+                      </div>
+                      <span className={`text-xs px-3 py-1.5 rounded-full font-medium ${
+                        issue.status === 'In Progress' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-700'
+                      }`}>
+                        {issue.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab !== 'dashboard' && (
+            <div className="bg-white rounded-xl shadow-md border border-slate-200">
+              {/* Toolbar */}
+              <div className="p-6 border-b border-slate-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-bold text-slate-800">
+                    {activeTab === 'desk-log' && 'Desk Log'}
+                    {activeTab === 'equipment' && 'Equipment Checkout Log'}
+                    {activeTab === 'packages' && 'Package Management'}
+                    {activeTab === 'lost-found' && 'Lost & Found'}
+                    {activeTab === 'maintenance' && 'Maintenance Requests'}
+                    {activeTab === 'visitors' && 'Visitor Management'}
+                  </h2>
+                  <button 
+                    onClick={() => setShowAddModal(true)}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg font-medium"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add New Entry
+                  </button>
+                </div>
+                <div className="flex items-center gap-3">
+                  <select
+                    value={filterBuilding}
+                    onChange={(e) => setFilterBuilding(e.target.value)}
+                    className="px-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  >
+                    <option value="all">All Buildings</option>
+                    {buildings.map(building => (
+                      <option key={building} value={building}>{building}</option>
+                    ))}
+                  </select>
+                  <button className="px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2 text-sm">
+                    <Filter className="w-4 h-4" />
+                    More Filters
+                  </button>
+                  <button className="px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2 text-sm">
+                    <Download className="w-4 h-4" />
+                    Export
+                  </button>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                {activeTab === 'desk-log' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-slate-200 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          <th className="pb-4 pr-4">Date</th>
+                          <th className="pb-4 pr-4">Author</th>
+                          <th className="pb-4 pr-4">Building</th>
+                          <th className="pb-4 pr-4">Note</th>
+                          <th className="pb-4 pr-4">Priority</th>
+                          <th className="pb-4 pr-4">Status</th>
+                          <th className="pb-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((log) => (
+                          <tr key={log.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 pr-4 text-sm text-slate-700">{log.date}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700 font-medium">{log.author}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{log.building}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600 max-w-md">{log.note}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                log.status === 'Active' ? 'bg-blue-100 text-blue-700' :
+                                log.status === 'Resolved' ? 'bg-green-100 text-green-700' :
+                                'bg-purple-100 text-purple-700'
+                              }`}>
+                                {log.status}
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <div className="flex gap-2">
+                                <button className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                                  <Edit className="w-4 h-4 text-blue-600" />
+                                </button>
+                                <button className="p-2 hover:bg-red-50 rounded-lg transition-colors">
+                                  <Trash2 className="w-4 h-4 text-red-600" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {activeTab === 'equipment' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-slate-200 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          <th className="pb-4 pr-4">Guest</th>
+                          <th className="pb-4 pr-4">Group</th>
+                          <th className="pb-4 pr-4">Item</th>
+                          <th className="pb-4 pr-4">Building</th>
+                          <th className="pb-4 pr-4">Room</th>
+                          <th className="pb-4 pr-4">Date/Time Out</th>
+                          <th className="pb-4 pr-4">Checked Out By</th>
+                          <th className="pb-4 pr-4">Status</th>
+                          <th className="pb-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((item) => (
+                          <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 pr-4 text-sm text-slate-700 font-medium">{item.guest}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{item.group}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{item.item}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{item.building}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{item.room}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{item.dateOut}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{item.checkOut}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                item.status === 'Out' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'
+                              }`}>
+                                {item.status}
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <div className="flex gap-2">
+                                <button className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                                  <Edit className="w-4 h-4 text-blue-600" />
+                                </button>
+                                <button className="p-2 hover:bg-red-50 rounded-lg transition-colors">
+                                  <Trash2 className="w-4 h-4 text-red-600" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {activeTab === 'packages' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-slate-200 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          <th className="pb-4 pr-4">Recipient</th>
+                          <th className="pb-4 pr-4">Date Received</th>
+                          <th className="pb-4 pr-4">Building</th>
+                          <th className="pb-4 pr-4">Room</th>
+                          <th className="pb-4 pr-4">Carrier</th>
+                          <th className="pb-4 pr-4">Location</th>
+                          <th className="pb-4 pr-4">Status</th>
+                          <th className="pb-4 pr-4">Notes</th>
+                          <th className="pb-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((pkg) => (
+                          <tr key={pkg.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 pr-4 text-sm text-slate-700 font-medium">{pkg.recipient}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{pkg.dateReceived}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{pkg.building}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{pkg.room}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{pkg.carrier}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{pkg.location}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                pkg.status === 'Ready' ? 'bg-blue-100 text-blue-700' :
+                                pkg.status === 'Notified' ? 'bg-amber-100 text-amber-700' :
+                                'bg-green-100 text-green-700'
+                              }`}>
+                                {pkg.status}
+                              </span>
+                            </td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{pkg.notes || '-'}</td>
+                            <td className="py-4">
+                              <div className="flex gap-2">
+                                <button className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                                  <Edit className="w-4 h-4 text-blue-600" />
+                                </button>
+                                <button className="p-2 hover:bg-green-50 rounded-lg transition-colors" title="Mark as Picked Up">
+                                  <CheckCircle className="w-4 h-4 text-green-600" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {activeTab === 'lost-found' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-slate-200 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          <th className="pb-4 pr-4">Item</th>
+                          <th className="pb-4 pr-4">Type</th>
+                          <th className="pb-4 pr-4">Date</th>
+                          <th className="pb-4 pr-4">Building</th>
+                          <th className="pb-4 pr-4">Location Found</th>
+                          <th className="pb-4 pr-4">Contact Name</th>
+                          <th className="pb-4 pr-4">Phone</th>
+                          <th className="pb-4 pr-4">Status</th>
+                          <th className="pb-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((item) => (
+                          <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 pr-4 text-sm text-slate-700 font-medium">{item.item}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                item.type === 'Found' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'
+                              }`}>
+                                {item.type}
+                              </span>
+                            </td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{item.date}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{item.building}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{item.where}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{item.guest}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{item.phone || '-'}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                item.status === 'At Desk' ? 'bg-blue-100 text-blue-700' :
+                                item.status === 'Claimed' ? 'bg-green-100 text-green-700' :
+                                'bg-slate-100 text-slate-700'
+                              }`}>
+                                {item.status}
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <div className="flex gap-2">
+                                <button className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                                  <Edit className="w-4 h-4 text-blue-600" />
+                                </button>
+                                <button className="p-2 hover:bg-green-50 rounded-lg transition-colors" title="Mark as Claimed">
+                                  <CheckCircle className="w-4 h-4 text-green-600" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {activeTab === 'maintenance' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-slate-200 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          <th className="pb-4 pr-4">Issue</th>
+                          <th className="pb-4 pr-4">Building</th>
+                          <th className="pb-4 pr-4">Location</th>
+                          <th className="pb-4 pr-4">Priority</th>
+                          <th className="pb-4 pr-4">Status</th>
+                          <th className="pb-4 pr-4">Reported</th>
+                          <th className="pb-4 pr-4">Reported By</th>
+                          <th className="pb-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((issue) => (
+                          <tr key={issue.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 pr-4 text-sm text-slate-700 font-medium">{issue.issue}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{issue.building}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{issue.location}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                issue.priority === 'High' ? 'bg-red-100 text-red-700' :
+                                issue.priority === 'Medium' ? 'bg-amber-100 text-amber-700' :
+                                'bg-slate-100 text-slate-700'
+                              }`}>
+                                {issue.priority}
+                              </span>
+                            </td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                issue.status === 'In Progress' ? 'bg-blue-100 text-blue-700' :
+                                issue.status === 'Resolved' ? 'bg-green-100 text-green-700' :
+                                'bg-slate-100 text-slate-700'
+                              }`}>
+                                {issue.status}
+                              </span>
+                            </td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{issue.reported}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{issue.reportedBy}</td>
+                            <td className="py-4">
+                              <div className="flex gap-2">
+                                <button className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                                  <Edit className="w-4 h-4 text-blue-600" />
+                                </button>
+                                <button className="p-2 hover:bg-green-50 rounded-lg transition-colors" title="Mark as Resolved">
+                                  <CheckCircle className="w-4 h-4 text-green-600" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {activeTab === 'visitors' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-slate-200 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          <th className="pb-4 pr-4">Visitor Name</th>
+                          <th className="pb-4 pr-4">Purpose</th>
+                          <th className="pb-4 pr-4">Building</th>
+                          <th className="pb-4 pr-4">Host</th>
+                          <th className="pb-4 pr-4">Check In</th>
+                          <th className="pb-4 pr-4">Check Out</th>
+                          <th className="pb-4 pr-4">Status</th>
+                          <th className="pb-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((visitor) => (
+                          <tr key={visitor.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 pr-4 text-sm text-slate-700 font-medium">{visitor.name}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{visitor.purpose}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-700">{visitor.building}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{visitor.host}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{visitor.checkIn}</td>
+                            <td className="py-4 pr-4 text-sm text-slate-600">{visitor.checkOut || '-'}</td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                                visitor.status === 'Checked In' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'
+                              }`}>
+                                {visitor.status}
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <div className="flex gap-2">
+                                <button className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                                  <Edit className="w-4 h-4 text-blue-600" />
+                                </button>
+                                {visitor.status === 'Checked In' && (
+                                  <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" title="Check Out">
+                                    <XCircle className="w-4 h-4 text-red-600" />
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-slate-200 py-4 px-6 mt-auto">
+        <div className="flex items-center justify-between text-sm text-slate-600">
+          <p>© 2024 University of Colorado Boulder Conference Services</p>
+          <div className="flex items-center gap-4">
+            <a href="#" className="hover:text-blue-600 transition-colors">Help & Support</a>
+            <a href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-blue-600 transition-colors">Contact IT</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default ConferenceServicesDesk;.5 py-1 rounded-full text-xs font-medium ${
+                                log.priority === 'High' ? 'bg-red-100 text-red-700' :
+                                log.priority === 'Medium' ? 'bg-amber-100 text-amber-700' :
+                                'bg-slate-100 text-slate-700'
+                              }`}>
+                                {log.priority}
+                              </span>
+                            </td>
+                            <td className="py-4 pr-4">
+                              <span className={`inline-flex items-center px-2
