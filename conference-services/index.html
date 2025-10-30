@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CU Conference Services eDesk</title>
+    <title>CU Boulder Conference Services eDesk</title>
     <style>
         * {
             margin: 0;
@@ -12,356 +12,536 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #000000 100%);
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         header {
-            background: white;
-            border-radius: 15px;
-            padding: 25px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 245, 245, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 45px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #000000 0%, #404040 100%);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 32px;
+            font-weight: 900;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 {
-            color: #2d3748;
-            font-size: 32px;
-            font-weight: 700;
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header-text h1 {
+            color: #000000;
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 5px;
         }
 
         .subtitle {
-            color: #718096;
-            font-size: 14px;
+            color: #666666;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 30px;
+            padding: 20px 0;
+            border-top: 2px solid #e0e0e0;
+            border-bottom: 2px solid #e0e0e0;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            flex: 1;
+            background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #000000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888888;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .info-sub {
+            font-size: 13px;
+            color: #666666;
             margin-top: 5px;
         }
 
         .header-actions {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #404040 100%);
             color: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         .btn-secondary {
-            background: #f7fafc;
-            color: #4a5568;
-            border: 2px solid #e2e8f0;
+            background: white;
+            color: #000000;
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .btn-secondary:hover {
-            background: #edf2f7;
+            background: #f5f5f5;
+            border-color: #000000;
+            transform: translateY(-2px);
         }
 
         .tabs {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .tab {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px 30px;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 600;
-            color: #4a5568;
+            font-weight: 700;
+            color: #666666;
             transition: all 0.3s;
             border: 2px solid transparent;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .tab:hover {
             background: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .tab.active {
-            background: white;
-            color: #667eea;
-            border-color: #667eea;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #000000 0%, #404040 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
         }
 
         .content-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #f0f0f0;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #000000 0%, #666666 100%);
         }
 
         .section-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #2d3748;
+            font-size: 28px;
+            font-weight: 800;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .add-btn {
-            background: #48bb78;
+            background: linear-gradient(135deg, #000000 0%, #404040 100%);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 14px;
         }
 
         .add-btn:hover {
-            background: #38a169;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
         thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #2d2d2d 100%);
             color: white;
         }
 
         th {
-            padding: 15px;
+            padding: 18px 15px;
             text-align: left;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            border-bottom: 3px solid #666666;
+        }
+
+        th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 12px;
         }
 
         tbody tr {
-            border-bottom: 1px solid #e2e8f0;
-            transition: all 0.2s;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.3s;
+            background: white;
         }
 
         tbody tr:hover {
-            background: #f7fafc;
-            transform: scale(1.01);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.03) 0%, rgba(100, 100, 100, 0.03) 100%);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         td {
-            padding: 18px 15px;
-            color: #4a5568;
+            padding: 20px 15px;
+            color: #333333;
             font-size: 14px;
+            font-weight: 500;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 11px;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
         .status-fyi {
-            background: #bee3f8;
-            color: #2c5282;
+            background: linear-gradient(135deg, #666666 0%, #888888 100%);
+            color: white;
         }
 
         .status-in-use {
-            background: #c6f6d5;
-            color: #22543d;
+            background: linear-gradient(135deg, #404040 0%, #606060 100%);
+            color: white;
         }
 
         .status-broken {
-            background: #fed7d7;
-            color: #742a2a;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: white;
         }
 
         .status-found {
-            background: #c6f6d5;
-            color: #22543d;
+            background: linear-gradient(135deg, #505050 0%, #707070 100%);
+            color: white;
         }
 
         .status-lost {
-            background: #fed7d7;
-            color: #742a2a;
+            background: linear-gradient(135deg, #2d2d2d 0%, #4d4d4d 100%);
+            color: white;
         }
 
         .status-unknown {
-            background: #e2e8f0;
-            color: #4a5568;
+            background: linear-gradient(135deg, #808080 0%, #999999 100%);
+            color: white;
+        }
+
+        .status-at-desk {
+            background: linear-gradient(135deg, #333333 0%, #555555 100%);
+            color: white;
         }
 
         .building-badge {
             display: inline-block;
-            padding: 6px 12px;
-            background: #edf2f7;
-            border-radius: 6px;
-            font-weight: 600;
-            color: #2d3748;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 8px;
+            font-weight: 700;
+            color: #000000;
             font-size: 13px;
+            border: 2px solid #666666;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .action-btn {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
-            background: #f7fafc;
-            color: #4a5568;
+            transition: all 0.3s;
+            background: #f5f5f5;
+            color: #000000;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .action-btn:hover {
-            background: #667eea;
+            background: linear-gradient(135deg, #000000 0%, #404040 100%);
             color: white;
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
         .search-bar {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            padding: 18px 60px 18px 25px;
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 16px;
             transition: all 0.3s;
+            font-weight: 600;
+            background: white;
         }
 
         .search-bar input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #000000;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
         }
 
         .search-icon {
             position: absolute;
-            right: 20px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
-            color: #a0aec0;
+            color: #666666;
+            font-size: 20px;
         }
 
         .grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
         }
 
         .building-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 25px;
-            border-radius: 12px;
-            color: white;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 2px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .building-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #000000 0%, #666666 100%);
         }
 
         .building-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+            border-color: #000000;
+        }
+
+        .building-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
         }
 
         .building-name {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #000000;
         }
 
         .building-info {
             font-size: 14px;
-            opacity: 0.9;
+            color: #666666;
+            line-height: 1.6;
+            font-weight: 500;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #a0aec0;
+        .building-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
         }
 
-        .empty-state svg {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 20px;
-            opacity: 0.5;
+        .building-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #555555;
+            font-weight: 600;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .content-card {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.6s ease-out;
         }
 
         .modal {
@@ -371,7 +551,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -383,72 +564,139 @@
 
         .modal-content {
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 600px;
+            padding: 45px;
+            border-radius: 20px;
+            max-width: 700px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.4s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2d3748;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #000000;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
         }
 
         .form-group textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
 
         .form-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: flex-end;
-            margin-top: 30px;
+            margin-top: 35px;
+        }
+
+        strong {
+            color: #000000;
+            font-weight: 800;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            border-left: 4px solid #000000;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo-section">
-                <div class="logo">CU</div>
-                <div>
-                    <h1>Conference Services eDesk</h1>
-                    <div class="subtitle">University of Colorado Conference Management</div>
+            <div class="header-top">
+                <div class="logo-section">
+                    <div class="logo">CU</div>
+                    <div class="header-text">
+                        <h1>Conference Services eDesk</h1>
+                        <div class="subtitle">University of Colorado Boulder</div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="showCalendar()">📅 Calendar</button>
+                    <button class="btn btn-primary" onclick="openModal('desk')">➕ New Entry</button>
                 </div>
             </div>
-            <div class="header-actions">
-                <button class="btn btn-secondary">📅 Calendar</button>
-                <button class="btn btn-primary">➕ New Entry</button>
+            <div class="header-info">
+                <div class="info-card">
+                    <div class="info-label">Manager</div>
+                    <div class="info-value">Tucker Beck</div>
+                    <div class="info-sub">Conference Services</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Teams</div>
+                    <div class="info-value">STRAT Team</div>
+                    <div class="info-sub">Event Space Team</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Active Staff</div>
+                    <div class="info-value">6 Members</div>
+                    <div class="info-sub">On Duty Today</div>
+                </div>
             </div>
         </header>
 
         <div class="tabs">
             <div class="tab active" onclick="switchTab('desk')">📋 Desk Log</div>
-            <div class="tab" onclick="switchTab('equipment')">🔧 Equipment Check Out</div>
+            <div class="tab" onclick="switchTab('equipment')">🔧 Equipment</div>
+            <div class="tab" onclick="switchTab('packages')">📦 Packages</div>
             <div class="tab" onclick="switchTab('lost')">🔍 Lost & Found</div>
             <div class="tab" onclick="switchTab('buildings')">🏢 Buildings</div>
         </div>
 
         <div id="desk-content" class="content-card">
+            <div class="success-message" id="success-desk">
+                <strong>✓ Success!</strong> Desk log entry has been added successfully.
+            </div>
             <div class="section-header">
                 <h2 class="section-title">Desk Log</h2>
                 <button class="add-btn" onclick="openModal('desk')">
@@ -467,41 +715,81 @@
                         <th>Building</th>
                         <th>Note</th>
                         <th>Status</th>
+                        <th>Year</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="desk-tbody">
                     <tr>
                         <td><strong>Grace Smith</strong></td>
                         <td>6/14/2024</td>
                         <td><span class="building-badge">Abel North</span></td>
                         <td>Abel the vending machines go out of order, the service number to call is (402) 423-7335</td>
                         <td><span class="status-badge status-fyi">FYI</span></td>
+                        <td>2024</td>
                         <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
+                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
+                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
                         </td>
                     </tr>
                     <tr>
                         <td><strong>Alley Van Emmerik</strong></td>
                         <td>6/5/2024</td>
                         <td><span class="building-badge">Abel North</span></td>
-                        <td>Linen Package Materials = Basic: Sheets, pillow, pillowcase Extended (VIP): Basic + blanket, towel, and daily towel exchange</td>
+                        <td>Linen Package Materials = Basic: Sheets, pillow, pillowcase. Extended (VIP): Basic + blanket, towel, and daily towel exchange</td>
                         <td><span class="status-badge status-fyi">FYI</span></td>
+                        <td>2024</td>
                         <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
+                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
+                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
                         </td>
                     </tr>
                     <tr>
                         <td><strong>Nicole Gibson</strong></td>
                         <td>5/30/2024</td>
                         <td><span class="building-badge">Abel North</span></td>
-                        <td>The FA's, CA's, anyone working here cannot take items meant to be checked out, without checking them out. Employees have been coming through the back to help themselves to the fridge and microwaves</td>
+                        <td>The FA's, CA's, anyone working here cannot take items meant to be checked out, without checking them out. Employees have been coming through the back to help themselves</td>
                         <td><span class="status-badge status-fyi">FYI</span></td>
+                        <td>2024</td>
                         <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
+                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
+                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Madi</strong></td>
+                        <td>5/30/2024</td>
+                        <td><span class="building-badge">Abel North</span></td>
+                        <td>Nathan informed the desk we CAN NOT place anything to cover the light on the package lockers no matter what</td>
+                        <td><span class="status-badge status-fyi">FYI</span></td>
+                        <td>2024</td>
+                        <td class="actions">
+                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
+                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Khushi Shah</strong></td>
+                        <td>5/22/2024</td>
+                        <td><span class="building-badge">Abel North</span></td>
+                        <td>There are 5 HDMI cables in the miscellaneous drawer. Make sure to take an ID when giving these out to guests</td>
+                        <td><span class="status-badge status-fyi">FYI</span></td>
+                        <td>2024</td>
+                        <td class="actions">
+                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
+                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kristen Nieves</strong></td>
+                        <td>5/22/2024</td>
+                        <td><span class="building-badge">Abel North</span></td>
+                        <td>When former residents want to come pick up packages, they are supposed to email one of the SSM's first so they can coordinate a pick up at the desk</td>
+                        <td><span class="status-badge status-fyi">FYI</span></td>
+                        <td>2024</td>
+                        <td class="actions">
+                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
+                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
                         </td>
                     </tr>
                 </tbody>
@@ -509,6 +797,9 @@
         </div>
 
         <div id="equipment-content" class="content-card" style="display: none;">
+            <div class="success-message" id="success-equipment">
+                <strong>✓ Success!</strong> Equipment check-out has been recorded successfully.
+            </div>
             <div class="section-header">
                 <h2 class="section-title">Equipment Check Out Log</h2>
                 <button class="add-btn" onclick="openModal('equipment')">
@@ -527,12 +818,13 @@
                         <th>Item</th>
                         <th>Building</th>
                         <th>Room</th>
-                        <th>Check-Out Date</th>
+                        <th>Check-Out</th>
+                        <th>Check-In</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="equipment-tbody">
                     <tr>
                         <td><strong>Jacob Lindblom</strong></td>
                         <td>FOCUS</td>
@@ -540,294 +832,7 @@
                         <td><span class="building-badge">Abel North</span></td>
                         <td>715</td>
                         <td>6/8/2024 6:42 AM</td>
+                        <td>6/8/2024 7:06 AM</td>
                         <td><span class="status-badge status-broken">Broken</span></td>
                         <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Elisa Foley</strong></td>
-                        <td>student</td>
-                        <td>HDMI CORD</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>ABELNO-0211-A1</td>
-                        <td>6/9/2024 8:09 AM</td>
-                        <td><span class="status-badge status-in-use">In Use</span></td>
-                        <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ryleigh Lindstrom</strong></td>
-                        <td>FA</td>
-                        <td>cart</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>238</td>
-                        <td>7/18/2024 3:29 PM</td>
-                        <td><span class="status-badge status-in-use">In Use</span></td>
-                        <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="lost-content" class="content-card" style="display: none;">
-            <div class="section-header">
-                <h2 class="section-title">Lost & Found Log</h2>
-                <button class="add-btn" onclick="openModal('lost')">
-                    <span>➕</span> Add Entry
-                </button>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search lost & found items..." onkeyup="filterTable('lost-table', this.value)">
-                <span class="search-icon">🔍</span>
-            </div>
-            <table id="lost-table">
-                <thead>
-                    <tr>
-                        <th>Item Description</th>
-                        <th>Lost/Found</th>
-                        <th>Date</th>
-                        <th>Building</th>
-                        <th>Where</th>
-                        <th>Guest Name</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Bronze Key</td>
-                        <td><span class="status-badge status-lost">Lost</span></td>
-                        <td>8/3/2024 8:00 PM</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>Unknown</td>
-                        <td><strong>Stefa Sogur</strong></td>
-                        <td><span class="status-badge status-unknown">Unknown</span></td>
-                        <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1 gold key labeled BB70</td>
-                        <td><span class="status-badge status-found">Found</span></td>
-                        <td>8/3/2024 5:15 PM</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>Abel Welcome Center</td>
-                        <td><strong>Morgan King</strong></td>
-                        <td>At Desk</td>
-                        <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2 silver keys</td>
-                        <td><span class="status-badge status-found">Found</span></td>
-                        <td>7/25/2024 3:15 PM</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>East walkway in abel welcome center</td>
-                        <td><strong>Kristen Nieves</strong></td>
-                        <td>At Desk</td>
-                        <td class="actions">
-                            <button class="action-btn">✏️</button>
-                            <button class="action-btn">🗑️</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="buildings-content" class="content-card" style="display: none;">
-            <div class="section-header">
-                <h2 class="section-title">Buildings</h2>
-                <button class="add-btn" onclick="openModal('building')">
-                    <span>➕</span> Add Building
-                </button>
-            </div>
-            <div class="grid-layout">
-                <div class="building-card">
-                    <div class="building-name">Abel North</div>
-                    <div class="building-info">Main Conference Building</div>
-                </div>
-                <div class="building-card">
-                    <div class="building-name">Abel South</div>
-                    <div class="building-info">Secondary Building</div>
-                </div>
-                <div class="building-card">
-                    <div class="building-name">Central Housing</div>
-                    <div class="building-info">Housing Complex</div>
-                </div>
-                <div class="building-card">
-                    <div class="building-name">Colonial Terrace</div>
-                    <div class="building-info">Residential Area</div>
-                </div>
-                <div class="building-card">
-                    <div class="building-name">Courtyards</div>
-                    <div class="building-info">Common Areas</div>
-                </div>
-                <div class="building-card">
-                    <div class="building-name">Eastside</div>
-                    <div class="building-info">East Campus</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="section-header">
-                <h2 class="section-title" id="modal-title">Add Entry</h2>
-                <button class="action-btn" onclick="closeModal()">✖️</button>
-            </div>
-            <div id="modal-form"></div>
-        </div>
-    </div>
-
-    <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            document.getElementById('desk-content').style.display = 'none';
-            document.getElementById('equipment-content').style.display = 'none';
-            document.getElementById('lost-content').style.display = 'none';
-            document.getElementById('buildings-content').style.display = 'none';
-            
-            document.getElementById(tab + '-content').style.display = 'block';
-        }
-
-        function filterTable(tableId, value) {
-            const table = document.getElementById(tableId);
-            const rows = table.getElementsByTagName('tr');
-            
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(value.toLowerCase()) ? '' : 'none';
-            }
-        }
-
-        function openModal(type) {
-            const modal = document.getElementById('modal');
-            const title = document.getElementById('modal-title');
-            const form = document.getElementById('modal-form');
-            
-            let formHTML = '';
-            
-            if (type === 'desk') {
-                title.textContent = 'Add Desk Log Entry';
-                formHTML = `
-                    <div class="form-group">
-                        <label>Author Name</label>
-                        <input type="text" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label>Building</label>
-                        <select>
-                            <option>Abel North</option>
-                            <option>Abel South</option>
-                            <option>Central Housing</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Note</label>
-                        <textarea placeholder="Enter note details..."></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                        <button class="btn btn-primary">Save Entry</button>
-                    </div>
-                `;
-            } else if (type === 'equipment') {
-                title.textContent = 'Add Equipment Check Out';
-                formHTML = `
-                    <div class="form-group">
-                        <label>Guest Name</label>
-                        <input type="text" placeholder="Enter guest name">
-                    </div>
-                    <div class="form-group">
-                        <label>Group</label>
-                        <input type="text" placeholder="Enter group name">
-                    </div>
-                    <div class="form-group">
-                        <label>Item</label>
-                        <input type="text" placeholder="Enter item description">
-                    </div>
-                    <div class="form-group">
-                        <label>Building</label>
-                        <select>
-                            <option>Abel North</option>
-                            <option>Abel South</option>
-                            <option>Central Housing</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Room Number</label>
-                        <input type="text" placeholder="Enter room number">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                        <button class="btn btn-primary">Check Out Item</button>
-                    </div>
-                `;
-            } else if (type === 'lost') {
-                title.textContent = 'Add Lost & Found Entry';
-                formHTML = `
-                    <div class="form-group">
-                        <label>Item Description</label>
-                        <input type="text" placeholder="Describe the item">
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select>
-                            <option>Lost</option>
-                            <option>Found</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Building</label>
-                        <select>
-                            <option>Abel North</option>
-                            <option>Abel South</option>
-                            <option>Central Housing</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Location Details</label>
-                        <input type="text" placeholder="Where was it lost/found?">
-                    </div>
-                    <div class="form-group">
-                        <label>Guest Name</label>
-                        <input type="text" placeholder="Enter guest name">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                        <button class="btn btn-primary">Save Entry</button>
-                    </div>
-                `;
-            }
-            
-            form.innerHTML = formHTML;
-            modal.classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-    </script>
-</body>
-</html>
+                            <button class="action-btn" onclick="edit
