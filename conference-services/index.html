@@ -1,838 +1,695 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CU Boulder Conference Services eDesk</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #000000 100%);
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 245, 245, 0.95) 100%);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px 45px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #000000 0%, #404040 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 32px;
-            font-weight: 900;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .header-text h1 {
-            color: #000000;
-            font-size: 36px;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            color: #666666;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .header-info {
-            display: flex;
-            gap: 30px;
-            padding: 20px 0;
-            border-top: 2px solid #e0e0e0;
-            border-bottom: 2px solid #e0e0e0;
-            margin-top: 20px;
-        }
-
-        .info-card {
-            flex: 1;
-            background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #000000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .info-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888888;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .info-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: #000000;
-        }
-
-        .info-sub {
-            font-size: 13px;
-            color: #666666;
-            margin-top: 5px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #000000 0%, #404040 100%);
-            color: white;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #000000;
-            border: 2px solid #e0e0e0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .btn-secondary:hover {
-            background: #f5f5f5;
-            border-color: #000000;
-            transform: translateY(-2px);
-        }
-
-        .tabs {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 18px 35px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            color: #666666;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .tab:hover {
-            background: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, #000000 0%, #404040 100%);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
-        }
-
-        .content-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #f0f0f0;
-            position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 120px;
-            height: 3px;
-            background: linear-gradient(90deg, #000000 0%, #666666 100%);
-        }
-
-        .section-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: #000000;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .add-btn {
-            background: linear-gradient(135deg, #000000 0%, #404040 100%);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 14px;
-        }
-
-        .add-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        thead {
-            background: linear-gradient(135deg, #000000 0%, #2d2d2d 100%);
-            color: white;
-        }
-
-        th {
-            padding: 18px 15px;
-            text-align: left;
-            font-weight: 700;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 3px solid #666666;
-        }
-
-        th:first-child {
-            border-top-left-radius: 12px;
-        }
-
-        th:last-child {
-            border-top-right-radius: 12px;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #e0e0e0;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        tbody tr:hover {
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.03) 0%, rgba(100, 100, 100, 0.03) 100%);
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        td {
-            padding: 20px 15px;
-            color: #333333;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        .status-fyi {
-            background: linear-gradient(135deg, #666666 0%, #888888 100%);
-            color: white;
-        }
-
-        .status-in-use {
-            background: linear-gradient(135deg, #404040 0%, #606060 100%);
-            color: white;
-        }
-
-        .status-broken {
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-            color: white;
-        }
-
-        .status-found {
-            background: linear-gradient(135deg, #505050 0%, #707070 100%);
-            color: white;
-        }
-
-        .status-lost {
-            background: linear-gradient(135deg, #2d2d2d 0%, #4d4d4d 100%);
-            color: white;
-        }
-
-        .status-unknown {
-            background: linear-gradient(135deg, #808080 0%, #999999 100%);
-            color: white;
-        }
-
-        .status-at-desk {
-            background: linear-gradient(135deg, #333333 0%, #555555 100%);
-            color: white;
-        }
-
-        .building-badge {
-            display: inline-block;
-            padding: 8px 14px;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            border-radius: 8px;
-            font-weight: 700;
-            color: #000000;
-            font-size: 13px;
-            border: 2px solid #666666;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            background: #f5f5f5;
-            color: #000000;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .action-btn:hover {
-            background: linear-gradient(135deg, #000000 0%, #404040 100%);
-            color: white;
-            transform: scale(1.15);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .search-bar {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 18px 60px 18px 25px;
-            border: 3px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s;
-            font-weight: 600;
-            background: white;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: #000000;
-            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666666;
-            font-size: 20px;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .building-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.4s;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border: 2px solid #e0e0e0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .building-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #000000 0%, #666666 100%);
-        }
-
-        .building-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
-            border-color: #000000;
-        }
-
-        .building-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .building-name {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            color: #000000;
-        }
-
-        .building-info {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .building-details {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #f0f0f0;
-        }
-
-        .building-detail-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            color: #555555;
-            font-weight: 600;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .content-card {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 45px;
-            border-radius: 20px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
-            animation: modalSlideIn 0.4s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(-50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 700;
-            color: #000000;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #000000;
-            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-end;
-            margin-top: 35px;
-        }
-
-        strong {
-            color: #000000;
-            font-weight: 800;
-        }
-
-        .success-message {
-            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-            border-left: 4px solid #000000;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Conference Services eDesk • University of Colorado Boulder</title>
+<style>
+  :root{
+    --gold:#cfb87c;           /* CU gold accent from screenshot */
+    --gold-2:#bfa766;
+    --ink:#0f0f10;
+    --panel:#1b1b1c;
+    --panel-2:#242425;
+    --panel-3:#2c2c2e;
+    --text:#e9e9e9;
+    --muted:#bdbdbd;
+    --subtle:#8a8a8a;
+    --ok:#3aafa9;
+    --warn:#e79a00;
+    --bad:#c03737;
+    --shadow:0 14px 28px rgba(0,0,0,.35), 0 10px 10px rgba(0,0,0,.28);
+    --radius-lg:18px;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
+    color:var(--text);
+    background: radial-gradient(1200px 600px at 15% 10%, #1b1b1c 0%, #111 60%, #0b0b0c 100%);
+    background-attachment:fixed;
+  }
+  .container{max-width:1200px; margin:30px auto; padding:0 16px}
+
+  /* header */
+  .header{
+    display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center; margin-bottom:18px;
+  }
+  .brand{display:flex; gap:16px; align-items:center}
+  .brand-badge{
+    width:56px;height:56px;border-radius:12px;
+    background:var(--gold);
+    color:#1a1a1a; font-weight:800; display:grid; place-items:center; font-size:22px;
+    box-shadow:var(--shadow);
+  }
+  .brand h1{margin:0; font-size:30px; letter-spacing:.2px; font-weight:800}
+  .brand small{display:block; margin-top:2px; color:var(--muted); font-weight:600}
+  .header-actions{display:flex; gap:10px}
+  .btn{
+    border:none; border-radius:10px; padding:10px 14px; font-weight:800; cursor:pointer;
+    background:var(--panel-2); color:#ddd; display:flex; align-items:center; gap:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,.35);
+  }
+  .btn.primary{background:var(--gold); color:#1c1c1c}
+  .btn:hover{filter:brightness(1.06)}
+  .cards{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:14px; margin-bottom:24px;
+  }
+  .card{
+    background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
+    border-radius:var(--radius-lg); padding:22px; box-shadow:var(--shadow);
+  }
+  .card h4{color:var(--gold); margin:0 0 8px 0; font-weight:800; letter-spacing:.3px}
+  .card .big{font-size:22px; font-weight:800}
+  .card .sub{color:var(--subtle); font-weight:600}
+
+  /* tabs */
+  .tabs{display:flex; gap:10px; margin-bottom:12px}
+  .tab{
+    background:var(--panel-2); color:#cfcfcf; border:1px solid #2f2f31;
+    padding:10px 16px; border-radius:10px; font-weight:800; cursor:pointer;
+    display:flex; align-items:center; gap:8px; box-shadow:0 8px 16px rgba(0,0,0,.35);
+  }
+  .tab.active{background:var(--gold); color:#1a1a1a; border-color:transparent}
+
+  /* sections */
+  .section{
+    background:var(--panel); border:1px solid #2f2f31; border-radius:var(--radius-lg);
+    padding:18px; box-shadow:var(--shadow);
+  }
+  .section-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+  .section-title{font-size:22px; font-weight:800}
+  .add-btn{background:var(--gold); color:#1a1a1a; border:none; border-radius:10px; padding:9px 14px; font-weight:800; cursor:pointer}
+  .search{display:flex; align-items:center; gap:10px; background:var(--panel-3); border-radius:10px; padding:10px 12px; border:1px solid #38383a}
+  .search input{flex:1; background:transparent; border:none; outline:none; color:#e7e7e7; font-weight:600}
+  .search-ctr{margin:10px 0 14px}
+
+  /* table */
+  table{width:100%; border-collapse:separate; border-spacing:0 10px}
+  thead th{
+    color:var(--gold); font-size:14px; text-align:left; font-weight:800; padding:10px 12px;
+  }
+  tbody tr{
+    background:var(--panel-2); border:1px solid #303033; box-shadow:0 8px 14px rgba(0,0,0,.35);
+  }
+  tbody td{padding:14px 12px; border-top:1px solid #303033; border-bottom:1px solid #303033; color:#ddd}
+  tbody tr td:first-child{border-left:1px solid #303033; border-top-left-radius:10px; border-bottom-left-radius:10px}
+  tbody tr td:last-child{border-right:1px solid #303033; border-top-right-radius:10px; border-bottom-right-radius:10px}
+  .badge{
+    display:inline-block; padding:4px 10px; border-radius:9px; font-size:12px; font-weight:800;
+    background:var(--panel-3); color:#eee; border:1px solid #3b3b3d;
+  }
+  .badge.gold{background:rgba(207,184,124,.18); border-color:#6b5a2b; color:var(--gold)}
+  .badge.ok{background:#294e4c; border-color:#357572; color:#b8fff7}
+  .badge.warn{background:#4d3b12; border-color:#7d5a19; color:#ffd88b}
+  .badge.bad{background:#402424; border-color:#6a3535; color:#ffb8b8}
+  .badge.gray{background:#3a3a3d; border-color:#4b4b4d; color:#d0d0d2}
+
+  .row-actions{display:flex; gap:10px; align-items:center}
+  .icon-btn{background:transparent; border:none; cursor:pointer; font-size:18px; color:#cfcfcf}
+  .icon-btn:hover{color:#ffffff}
+
+  /* buildings grid */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:16px}
+  .bld-card{background:var(--panel-2); border:1px solid #303033; border-radius:14px; padding:16px; box-shadow:0 10px 18px rgba(0,0,0,.35)}
+  .bld-card .name{font-weight:800; margin:6px 0 8px}
+  .bld-card .desc{color:#c9c9c9; font-size:14px}
+  .bld-card .detail{color:#a9a9aa; font-size:13px; margin-top:6px}
+
+  /* modal */
+  .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); z-index:50}
+  .modal.active{display:flex}
+  .dialog{
+    width:min(720px,92vw); background:var(--panel-2); border:1px solid #2e2e30; border-radius:16px; box-shadow:var(--shadow); padding:18px;
+  }
+  .dialog h3{margin:0 0 10px 0}
+  .form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .form .full{grid-column:1/-1}
+  .form label{font-size:13px; color:var(--muted); font-weight:800; display:block; margin-bottom:6px}
+  .form input,.form select,.form textarea{
+    width:100%; background:var(--panel-3); border:1px solid #3a3a3d; color:#e8e8e8; border-radius:10px; padding:10px; font-weight:600;
+  }
+  .form textarea{min-height:110px; resize:vertical}
+  .dialog-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:14px}
+  .btn.ghost{background:#2e2e30; color:#e6e6e6}
+
+  /* small */
+  a{color:#d7c890; text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-top">
-                <div class="logo-section">
-                    <div class="logo">CU</div>
-                    <div class="header-text">
-                        <h1>Conference Services eDesk</h1>
-                        <div class="subtitle">University of Colorado Boulder</div>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" onclick="showCalendar()">📅 Calendar</button>
-                    <button class="btn btn-primary" onclick="openModal('desk')">➕ New Entry</button>
-                </div>
-            </div>
-            <div class="header-info">
-                <div class="info-card">
-                    <div class="info-label">Manager</div>
-                    <div class="info-value">Tucker Beck</div>
-                    <div class="info-sub">Conference Services</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Teams</div>
-                    <div class="info-value">STRAT Team</div>
-                    <div class="info-sub">Event Space Team</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Active Staff</div>
-                    <div class="info-value">6 Members</div>
-                    <div class="info-sub">On Duty Today</div>
-                </div>
-            </div>
-        </header>
-
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab('desk')">📋 Desk Log</div>
-            <div class="tab" onclick="switchTab('equipment')">🔧 Equipment</div>
-            <div class="tab" onclick="switchTab('packages')">📦 Packages</div>
-            <div class="tab" onclick="switchTab('lost')">🔍 Lost & Found</div>
-            <div class="tab" onclick="switchTab('buildings')">🏢 Buildings</div>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="brand">
+        <div class="brand-badge">CU</div>
+        <div>
+          <h1>Conference Services eDesk</h1>
+          <small>University of Colorado Boulder</small>
         </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn">🗓️ <strong>Calendar</strong></button>
+        <button class="btn primary" onclick="openModal('desk')">➕ <strong>New Entry</strong></button>
+      </div>
+    </div>
 
-        <div id="desk-content" class="content-card">
-            <div class="success-message" id="success-desk">
-                <strong>✓ Success!</strong> Desk log entry has been added successfully.
-            </div>
-            <div class="section-header">
-                <h2 class="section-title">Desk Log</h2>
-                <button class="add-btn" onclick="openModal('desk')">
-                    <span>➕</span> Add Entry
-                </button>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search desk log entries..." onkeyup="filterTable('desk-table', this.value)">
-                <span class="search-icon">🔍</span>
-            </div>
-            <table id="desk-table">
-                <thead>
-                    <tr>
-                        <th>Author</th>
-                        <th>Date</th>
-                        <th>Building</th>
-                        <th>Note</th>
-                        <th>Status</th>
-                        <th>Year</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="desk-tbody">
-                    <tr>
-                        <td><strong>Grace Smith</strong></td>
-                        <td>6/14/2024</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>Abel the vending machines go out of order, the service number to call is (402) 423-7335</td>
-                        <td><span class="status-badge status-fyi">FYI</span></td>
-                        <td>2024</td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
-                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Alley Van Emmerik</strong></td>
-                        <td>6/5/2024</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>Linen Package Materials = Basic: Sheets, pillow, pillowcase. Extended (VIP): Basic + blanket, towel, and daily towel exchange</td>
-                        <td><span class="status-badge status-fyi">FYI</span></td>
-                        <td>2024</td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
-                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nicole Gibson</strong></td>
-                        <td>5/30/2024</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>The FA's, CA's, anyone working here cannot take items meant to be checked out, without checking them out. Employees have been coming through the back to help themselves</td>
-                        <td><span class="status-badge status-fyi">FYI</span></td>
-                        <td>2024</td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
-                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Madi</strong></td>
-                        <td>5/30/2024</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>Nathan informed the desk we CAN NOT place anything to cover the light on the package lockers no matter what</td>
-                        <td><span class="status-badge status-fyi">FYI</span></td>
-                        <td>2024</td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
-                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Khushi Shah</strong></td>
-                        <td>5/22/2024</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>There are 5 HDMI cables in the miscellaneous drawer. Make sure to take an ID when giving these out to guests</td>
-                        <td><span class="status-badge status-fyi">FYI</span></td>
-                        <td>2024</td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
-                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kristen Nieves</strong></td>
-                        <td>5/22/2024</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>When former residents want to come pick up packages, they are supposed to email one of the SSM's first so they can coordinate a pick up at the desk</td>
-                        <td><span class="status-badge status-fyi">FYI</span></td>
-                        <td>2024</td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="editEntry(this)">✏️</button>
-                            <button class="action-btn" onclick="deleteEntry(this)">🗑️</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- header cards -->
+    <div class="cards">
+      <div class="card">
+        <h4>Manager</h4>
+        <div class="big">Tucker Beck</div>
+        <div class="sub">Conference Services</div>
+      </div>
+      <div class="card">
+        <h4>Teams</h4>
+        <div class="big">STRAT Team</div>
+        <div class="sub">Event Space Team</div>
+      </div>
+      <div class="card" id="staffCard">
+        <h4>Active Staff</h4>
+        <div class="big"><span id="activeCount">0</span> Members</div>
+        <div class="sub">On Duty Today • <a href="#" onclick="openStaffModal();return false;">manage</a></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(event,'desk')">📁 Desk Log</div>
+      <div class="tab" onclick="switchTab(event,'equipment')">🔧 Equipment</div>
+      <div class="tab" onclick="switchTab(event,'packages')">📦 Packages</div>
+      <div class="tab" onclick="switchTab(event,'lost')">🔍 Lost & Found</div>
+      <div class="tab" onclick="switchTab(event,'buildings')">🏢 Buildings</div>
+      <div class="tab" onclick="switchTab(event,'documents')">📑 Documents</div>
+    </div>
+
+    <!-- Sections -->
+    <section id="desk" class="section">
+      <div class="section-header">
+        <div class="section-title">Desk Log</div>
+        <button class="add-btn" onclick="openModal('desk')">➕ Add Entry</button>
+      </div>
+      <div class="search-ctr">
+        <div class="search"><input placeholder="Search desk log entries..." onkeyup="filterTable('desk-table', this.value)"> 🔎</div>
+      </div>
+      <table id="desk-table">
+        <thead>
+          <tr>
+            <th>Author</th><th>Date</th><th>Building</th><th>Note</th><th>Status</th><th>Year</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="desk-tbody"></tbody>
+      </table>
+    </section>
+
+    <section id="equipment" class="section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Equipment</div>
+        <button class="add-btn" onclick="openModal('equipment')">➕ Add Entry</button>
+      </div>
+      <div class="search-ctr"><div class="search"><input placeholder="Search equipment..." onkeyup="filterTable('equipment-table', this.value)"> 🔎</div></div>
+      <table id="equipment-table">
+        <thead><tr>
+          <th>Guest</th><th>Group</th><th>Item</th><th>Building</th><th>Room</th><th>Check-Out</th><th>Check-In</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="equipment-tbody"></tbody>
+      </table>
+    </section>
+
+    <section id="packages" class="section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Packages</div>
+        <button class="add-btn" onclick="openModal('package')">➕ Add Package</button>
+      </div>
+      <div class="search-ctr"><div class="search"><input placeholder="Search packages..." onkeyup="filterTable('packages-table', this.value)"> 🔎</div></div>
+      <table id="packages-table">
+        <thead><tr>
+          <th>Guest</th><th>Date Received</th><th>Building</th><th>Group</th><th>Location</th><th>Date Picked Up</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="packages-tbody"></tbody>
+      </table>
+    </section>
+
+    <section id="lost" class="section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Lost & Found</div>
+        <button class="add-btn" onclick="openModal('lost')">➕ Add Entry</button>
+      </div>
+      <div class="search-ctr"><div class="search"><input placeholder="Search lost items..." onkeyup="filterTable('lost-table', this.value)"> 🔎</div></div>
+      <table id="lost-table">
+        <thead><tr>
+          <th>Item</th><th>Lost/Found</th><th>Date</th><th>Building</th><th>Where</th><th>Guest</th><th>Phone</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="lost-tbody"></tbody>
+      </table>
+    </section>
+
+    <section id="buildings" class="section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">CU Boulder Buildings</div>
+        <button class="add-btn" onclick="openModal('building')">➕ Add Building</button>
+      </div>
+      <div class="grid" id="buildings-grid"></div>
+    </section>
+
+    <section id="documents" class="section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Documents</div>
+        <button class="add-btn" onclick="openModal('document')">➕ Add Link</button>
+      </div>
+      <div class="search-ctr"><div class="search"><input placeholder="Search documents..." onkeyup="filterTable('documents-table', this.value)"> 🔎</div></div>
+      <table id="documents-table">
+        <thead><tr><th>Title</th><th>URL</th><th>Notes</th><th>Actions</th></tr></thead>
+        <tbody id="documents-tbody"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="dialog">
+      <h3 id="modal-title">Add Entry</h3>
+      <div id="modal-form" class="form"></div>
+      <div class="dialog-actions">
+        <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn primary" id="modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staff Modal -->
+  <div class="modal" id="staff-modal">
+    <div class="dialog">
+      <h3>Manage Today’s Staff</h3>
+      <div class="form full" id="staff-form" style="grid-template-columns:1fr;">
+        <!-- checkboxes injected here -->
+      </div>
+      <div class="dialog-actions">
+        <button class="btn ghost" onclick="closeStaffModal()">Close</button>
+        <button class="btn primary" onclick="saveStaff()">Save</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ================== Storage helpers ================== */
+const store = {
+  get: (k, fb) => JSON.parse(localStorage.getItem(k) || JSON.stringify(fb)),
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+};
+const uid = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
+
+/* ================== Seed Data ================== */
+const SEED = {
+  staff:[
+    {name:'Prudhvi', on:true, coming:false},
+    {name:'Nick', on:false, coming:true},
+    {name:'Eliana', on:false, coming:false},
+    {name:'Neha', on:true, coming:false},
+    {name:'Priya', on:false, coming:false},
+    {name:'Freya', on:false, coming:true},
+  ],
+  deskLog:[
+    {author:'Grace Smith', date:'6/14/2024', building:'Abel North', note:'Vending machines are out of order. Call (402) 423-7335.', status:'FYI', year:2024, _id:uid()}
+  ],
+  equipmentLog:[],
+  packagesLog:[],
+  lostLog:[
+    {item:'Bronze Key', lostfound:'Lost', date:'8/3/2024', building:'Abel North', where:'Unknown', guest:'Stefa Sogur', phone:'308-400-0310', status:'Unknown', _id:uid()}
+  ],
+  buildings:[
+    {icon:'🏢', name:'Abel North', info:'Conference & housing; modern amenities.', details:['1655 Folsom St, Boulder, CO','Front Desk: (303) 492-7032'], _id:uid()},
+    {icon:'🏛️', name:'C4C', info:'Center for Community dining & events.', details:['2200 Willard Loop Dr, Boulder, CO','Catering support on site'], _id:uid()},
+    {icon:'🏘️', name:'Kittredge Central', info:'Conference housing & classrooms.', details:['2480 Kittredge Loop Dr, Boulder, CO','Residence Life coordination'], _id:uid()}
+  ],
+  documents:[
+    {title:'Desk Procedures', url:'#', notes:'Standard ops for all desks', _id:uid()},
+    {title:'Lost & Found Policy', url:'#', notes:'Intake, storage, release', _id:uid()},
+    {title:'Tech Support Guide', url:'#', notes:'AV & HDMI checkout steps', _id:uid()},
+  ]
+};
+
+(function seed(){
+  if(!localStorage.getItem('edesk_seeded')){
+    store.set('staff', SEED.staff);
+    store.set('deskLog', SEED.deskLog);
+    store.set('equipmentLog', SEED.equipmentLog);
+    store.set('packagesLog', SEED.packagesLog);
+    store.set('lostLog', SEED.lostLog);
+    store.set('buildings', SEED.buildings);
+    store.set('documents', SEED.documents);
+    localStorage.setItem('edesk_seeded','1');
+  }
+})();
+
+/* ================== Renderers ================== */
+function renderAll(){
+  renderStaff();
+  renderDesk();
+  renderEquipment();
+  renderPackages();
+  renderLost();
+  renderBuildings();
+  renderDocuments();
+}
+function renderStaff(){
+  const staff = store.get('staff', []);
+  const active = staff.filter(s=>s.on).length;
+  document.getElementById('activeCount').textContent = active;
+}
+function renderDesk(){
+  const rows = store.get('deskLog', []);
+  const tbody = document.getElementById('desk-tbody');
+  tbody.innerHTML = rows.map(r=>`
+    <tr>
+      <td><strong>${e(r.author)}</strong></td>
+      <td>${e(r.date)}</td>
+      <td><span class="badge gold">${e(r.building)}</span></td>
+      <td>${e(r.note)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td>${e(String(r.year||""))}</td>
+      <td>
+        <div class="row-actions">
+          <button class="icon-btn" title="Edit" onclick="openModal('desk', '${r._id}')">✏️</button>
+          <button class="icon-btn" title="Delete" onclick="deleteRow('deskLog','${r._id}', renderDesk)">🗑️</button>
         </div>
+      </td>
+    </tr>`).join('');
+}
+function renderEquipment(){
+  const rows = store.get('equipmentLog', []);
+  const tbody = document.getElementById('equipment-tbody');
+  tbody.innerHTML = rows.map(r=>`
+    <tr>
+      <td><strong>${e(r.guest)}</strong></td><td>${e(r.group||'')}</td>
+      <td>${e(r.item)}</td><td><span class="badge gold">${e(r.building)}</span></td>
+      <td>${e(r.room||'-')}</td><td>${e(r.out||'')}</td><td>${e(r.in||'-')}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" onclick="openModal('equipment','${r._id}')">✏️</button>
+        <button class="icon-btn" onclick="deleteRow('equipmentLog','${r._id}', renderEquipment)">🗑️</button>
+      </div></td>
+    </tr>`).join('');
+}
+function renderPackages(){
+  const rows = store.get('packagesLog', []);
+  const tbody = document.getElementById('packages-tbody');
+  tbody.innerHTML = rows.map(r=>`
+    <tr>
+      <td><strong>${e(r.guest)}</strong></td>
+      <td>${e(r.dateReceived||'')}</td>
+      <td><span class="badge gold">${e(r.building)}</span></td>
+      <td>${e(r.group||'')}</td><td>${e(r.location||'')}</td>
+      <td>${e(r.pickedUp||'-')}</td><td>${statusBadge(r.status)}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" onclick="openModal('package','${r._id}')">✏️</button>
+        <button class="icon-btn" onclick="deleteRow('packagesLog','${r._id}', renderPackages)">🗑️</button>
+      </div></td>
+    </tr>`).join('');
+}
+function renderLost(){
+  const rows = store.get('lostLog', []);
+  const tbody = document.getElementById('lost-tbody');
+  tbody.innerHTML = rows.map(r=>`
+    <tr>
+      <td>${e(r.item)}</td>
+      <td>${statusBadge(r.lostfound)}</td>
+      <td>${e(r.date)}</td>
+      <td><span class="badge gold">${e(r.building)}</span></td>
+      <td>${e(r.where||'')}</td>
+      <td><strong>${e(r.guest||'')}</strong></td>
+      <td>${e(r.phone||'')}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" onclick="openModal('lost','${r._id}')">✏️</button>
+        <button class="icon-btn" onclick="deleteRow('lostLog','${r._id}', renderLost)">🗑️</button>
+      </div></td>
+    </tr>`).join('');
+}
+function renderBuildings(){
+  const grid = document.getElementById('buildings-grid');
+  const rows = store.get('buildings', []);
+  grid.innerHTML = rows.map(r=>`
+    <div class="bld-card">
+      <div style="font-size:28px">${e(r.icon||'🏢')}</div>
+      <div class="name">${e(r.name)}</div>
+      <div class="desc">${e(r.info||'')}</div>
+      ${(r.details||[]).map(d=>`<div class="detail">• ${e(d)}</div>`).join('')}
+      <div class="row-actions" style="margin-top:10px">
+        <button class="icon-btn" onclick="openModal('building','${r._id}')">✏️</button>
+        <button class="icon-btn" onclick="deleteRow('buildings','${r._id}', renderBuildings)">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+function renderDocuments(){
+  const rows = store.get('documents', []);
+  const tbody = document.getElementById('documents-tbody');
+  tbody.innerHTML = rows.map(r=>`
+    <tr>
+      <td><strong>${e(r.title)}</strong></td>
+      <td><a href="${ea(r.url||'#')}" target="_blank">${e(r.url||'open')}</a></td>
+      <td>${e(r.notes||'')}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" onclick="openModal('document','${r._id}')">✏️</button>
+        <button class="icon-btn" onclick="deleteRow('documents','${r._id}', renderDocuments)">🗑️</button>
+      </div></td>
+    </tr>`).join('');
+}
 
-        <div id="equipment-content" class="content-card" style="display: none;">
-            <div class="success-message" id="success-equipment">
-                <strong>✓ Success!</strong> Equipment check-out has been recorded successfully.
-            </div>
-            <div class="section-header">
-                <h2 class="section-title">Equipment Check Out Log</h2>
-                <button class="add-btn" onclick="openModal('equipment')">
-                    <span>➕</span> Add Entry
-                </button>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search equipment..." onkeyup="filterTable('equipment-table', this.value)">
-                <span class="search-icon">🔍</span>
-            </div>
-            <table id="equipment-table">
-                <thead>
-                    <tr>
-                        <th>Guest Name</th>
-                        <th>Group</th>
-                        <th>Item</th>
-                        <th>Building</th>
-                        <th>Room</th>
-                        <th>Check-Out</th>
-                        <th>Check-In</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="equipment-tbody">
-                    <tr>
-                        <td><strong>Jacob Lindblom</strong></td>
-                        <td>FOCUS</td>
-                        <td>Ping pong paddle (2) and balls</td>
-                        <td><span class="building-badge">Abel North</span></td>
-                        <td>715</td>
-                        <td>6/8/2024 6:42 AM</td>
-                        <td>6/8/2024 7:06 AM</td>
-                        <td><span class="status-badge status-broken">Broken</span></td>
-                        <td class="actions">
-                            <button class="action-btn" onclick="edit
+/* ================== Tabs & Search ================== */
+function switchTab(evt, id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  evt.target.classList.add('active');
+  ['desk','equipment','packages','lost','buildings','documents'].forEach(s=>{
+    document.getElementById(s).style.display = s===id ? 'block' : 'none';
+  });
+}
+function filterTable(tableId, value){
+  const rows = document.getElementById(tableId).getElementsByTagName('tr');
+  for(let i=1;i<rows.length;i++){
+    rows[i].style.display = rows[i].textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none';
+  }
+}
+
+/* ================== Modal Forms ================== */
+const modal = document.getElementById('modal');
+const formBox = document.getElementById('modal-form');
+let currentType = null, editingId = null;
+
+function openModal(type, id=null){
+  currentType = type; editingId = id;
+  const title = document.getElementById('modal-title');
+  const saveBtn = document.getElementById('modal-save');
+  title.textContent =
+    type==='desk' ? 'Desk Log Entry' :
+    type==='equipment' ? 'Equipment Entry' :
+    type==='package' ? 'Package Entry' :
+    type==='lost' ? 'Lost & Found Entry' :
+    type==='building' ? 'Add / Edit Building' :
+    'Add Document';
+
+  const bldOpts = ['Abel North','C4C','Kittredge Central','Williams Village East','Bear Creek','Farrand Hall']
+                  .map(b=>`<option>${b}</option>`).join('');
+
+  const data = (id && getRowByType(type, id)) || {};
+  const v = (x)=> (x??'');
+
+  let html='';
+  if(type==='desk'){
+    html = `
+      <div class="full"><label>Author</label><input id="author" value="${v(data.author)}"></div>
+      <div><label>Building</label><select id="building">${bldOpts}</select></div>
+      <div><label>Status</label><select id="status"><option>FYI</option><option>In Use</option><option>Broken</option></select></div>
+      <div class="full"><label>Note</label><textarea id="note">${v(data.note)}</textarea></div>`;
+  } else if(type==='equipment'){
+    html = `
+      <div><label>Guest</label><input id="guest" value="${v(data.guest)}"></div>
+      <div><label>Group</label><input id="group" value="${v(data.group)}"></div>
+      <div><label>Item</label><input id="item" value="${v(data.item)}"></div>
+      <div><label>Building</label><select id="building">${bldOpts}</select></div>
+      <div><label>Room</label><input id="room" value="${v(data.room)}"></div>
+      <div><label>Status</label><select id="status"><option>In Use</option><option>Broken</option></select></div>
+      <div><label>Check-Out</label><input id="out" value="${v(data.out)}"></div>
+      <div><label>Check-In</label><input id="in" value="${v(data.in)}"></div>`;
+  } else if(type==='package'){
+    html = `
+      <div><label>Guest</label><input id="guest" value="${v(data.guest)}"></div>
+      <div><label>Building</label><select id="building">${bldOpts}</select></div>
+      <div><label>Group</label><input id="group" value="${v(data.group)}"></div>
+      <div><label>Location</label><input id="location" value="${v(data.location)}"></div>
+      <div><label>Date Received</label><input id="dateReceived" value="${v(data.dateReceived)}"></div>
+      <div><label>Date Picked Up</label><input id="pickedUp" value="${v(data.pickedUp)}"></div>
+      <div class="full"><label>Status</label><select id="status"><option>At Desk</option><option>Picked Up</option></select></div>`;
+  } else if(type==='lost'){
+    html = `
+      <div><label>Item</label><input id="item" value="${v(data.item)}"></div>
+      <div><label>Lost/Found</label><select id="lostfound"><option>Lost</option><option>Found</option></select></div>
+      <div><label>Building</label><select id="building">${bldOpts}</select></div>
+      <div><label>Where</label><input id="where" value="${v(data.where)}"></div>
+      <div><label>Guest</label><input id="guest" value="${v(data.guest)}"></div>
+      <div><label>Phone</label><input id="phone" value="${v(data.phone)}"></div>
+      <div class="full"><label>Status</label><select id="status"><option>At Desk</option><option>Unknown</option></select></div>`;
+  } else if(type==='building'){
+    html = `
+      <div><label>Icon (emoji)</label><input id="icon" value="${v(data.icon)||'🏢'}"></div>
+      <div><label>Name</label><input id="name" value="${v(data.name)}"></div>
+      <div class="full"><label>Description</label><textarea id="info">${v(data.info)}</textarea></div>
+      <div class="full"><label>Detail 1</label><input id="d1" value="${v(data.details?.[0])}"></div>
+      <div class="full"><label>Detail 2</label><input id="d2" value="${v(data.details?.[1])}"></div>`;
+  } else { // documents
+    html = `
+      <div><label>Title</label><input id="title" value="${v(data.title)}"></div>
+      <div><label>URL</label><input id="url" value="${v(data.url)}"></div>
+      <div class="full"><label>Notes</label><input id="notes" value="${v(data.notes)}"></div>`;
+  }
+
+  formBox.innerHTML = html;
+  modal.classList.add('active');
+
+  // set selects for edit
+  if(id){
+    const set = (id, val)=>{const el=document.getElementById(id); if(el) el.value = val||el.value};
+    if(type==='desk'){ set('status', data.status); set('building', data.building); }
+    if(type==='equipment'){ set('status', data.status); set('building', data.building); }
+    if(type==='package'){ set('status', data.status); set('building', data.building); }
+    if(type==='lost'){ set('lostfound', data.lostfound); set('status', data.status); set('building', data.building); }
+  }
+
+  document.getElementById('modal-save').onclick = saveModal;
+}
+function closeModal(){ modal.classList.remove('active'); }
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+function getRowByType(type, id){
+  const key = mapKey(type);
+  return store.get(key, []).find(r=>r._id===id);
+}
+function mapKey(type){
+  return type==='desk' ? 'deskLog' :
+         type==='equipment' ? 'equipmentLog' :
+         type==='package' ? 'packagesLog' :
+         type==='lost' ? 'lostLog' :
+         type==='building' ? 'buildings' : 'documents';
+}
+function saveModal(){
+  const today = new Date();
+  const dateStr = `${today.getMonth()+1}/${today.getDate()}/${today.getFullYear()}`;
+  const timeStr = today.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+  const key = mapKey(currentType);
+  const rows = store.get(key, []);
+
+  function upsert(obj){
+    if(!editingId){ obj._id = uid(); rows.unshift(obj); }
+    else{
+      const i = rows.findIndex(r=>r._id===editingId);
+      if(i>-1) rows[i] = {...rows[i], ...obj};
+    }
+    store.set(key, rows);
+  }
+
+  if(currentType==='desk'){
+    const author=v('author'), building=v('building'), note=v('note'), status=v('status');
+    if(!author || !note) return;
+    upsert({author, date:dateStr, building, note, status, year:today.getFullYear()});
+    closeModal(); renderDesk();
+  }
+  if(currentType==='equipment'){
+    const guest=v('guest'), group=v('group'), item=v('item'), building=v('building'), room=v('room'),
+          out=(document.getElementById('out').value||`${dateStr} ${timeStr}`), _in=v('in'), status=v('status');
+    if(!guest || !item) return;
+    upsert({guest, group, item, building, room, out, in:_in, status});
+    closeModal(); renderEquipment();
+  }
+  if(currentType==='package'){
+    const guest=v('guest'), building=v('building'), group=v('group'), location=v('location'),
+          dateReceived=(document.getElementById('dateReceived').value||dateStr), pickedUp=v('pickedUp'), status=v('status');
+    if(!guest) return;
+    upsert({guest, dateReceived, building, group, location, pickedUp, status});
+    closeModal(); renderPackages();
+  }
+  if(currentType==='lost'){
+    const item=v('item'), lostfound=v('lostfound'), building=v('building'), where=v('where'),
+          guest=v('guest'), phone=v('phone'), status=v('status');
+    if(!item) return;
+    upsert({item, lostfound, date:`${dateStr} ${timeStr}`, building, where, guest, phone, status});
+    closeModal(); renderLost();
+  }
+  if(currentType==='building'){
+    const icon=v('icon')||'🏢', name=v('name'); if(!name) return;
+    const info=v('info'), details=[v('d1'),v('d2')].filter(Boolean);
+    upsert({icon, name, info, details});
+    closeModal(); renderBuildings();
+  }
+  if(currentType==='document'){
+    const title=v('title'); if(!title) return;
+    const url=v('url'), notes=v('notes');
+    upsert({title, url, notes});
+    closeModal(); renderDocuments();
+  }
+}
+function v(id){ const el=document.getElementById(id); return el?el.value.trim():'' }
+
+/* ================== Delete ================== */
+function deleteRow(key, id, rerender){
+  if(!confirm('Delete this entry?')) return;
+  const rows = store.get(key, []).filter(r=>r._id!==id);
+  store.set(key, rows);
+  rerender();
+}
+
+/* ================== Staff Modal ================== */
+const staffModal = document.getElementById('staff-modal');
+function openStaffModal(){
+  const wrap = document.getElementById('staff-form');
+  const staff = store.get('staff', []);
+  wrap.innerHTML = staff.map((s,i)=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;background:var(--panel-3);border:1px solid #3a3a3d;border-radius:10px;padding:10px 12px;margin-bottom:10px">
+      <strong>${e(s.name)}</strong>
+      <span>
+        <label style="margin-right:10px;"><input type="checkbox" id="on_${i}" ${s.on?'checked':''}/> On Duty</label>
+        <label><input type="checkbox" id="coming_${i}" ${s.coming?'checked':''}/> Coming In Today</label>
+      </span>
+    </div>
+  `).join('');
+  staffModal.classList.add('active');
+}
+function closeStaffModal(){ staffModal.classList.remove('active'); }
+staffModal.addEventListener('click',e=>{ if(e.target===e.currentTarget) closeStaffModal(); });
+
+function saveStaff(){
+  const staff = store.get('staff', []);
+  staff.forEach((s,i)=>{
+    s.on = document.getElementById(`on_${i}`).checked;
+    s.coming = document.getElementById(`coming_${i}`).checked;
+  });
+  store.set('staff', staff);
+  closeStaffModal();
+  renderStaff();
+}
+
+/* ================== Utilities ================== */
+function e(s){return String(s||'').replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));}
+function ea(s){return String(s||'').replace(/"/g,'&quot;');}
+
+/* ================== Search wiring ================== */
+function hookSearchers(){
+  const map = {
+    'desk-table':'desk',
+    'equipment-table':'equipment',
+    'packages-table':'packages',
+    'lost-table':'lost',
+    'documents-table':'documents'
+  };
+  // already bound via onkeyup in inputs; keep for completeness if needed later
+}
+
+/* ================== Boot ================== */
+renderAll();
+hookSearchers();
+</script>
+</body>
+</html>
