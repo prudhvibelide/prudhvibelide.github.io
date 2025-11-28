@@ -60,12 +60,11 @@ const cloudSongs = [
 /* ──────────────────────────────────────────────── */
 
 const localSongs = [
-    { id: 0, name: "Song 1", artist: "RPi Local", image: "images/local1.jpg" },
-    { id: 1, name: "Song 2", artist: "RPi Local", image: "images/local2.jpg" },
-    { id: 2, name: "Song 3", artist: "RPi Local", image: "images/local3.jpg" },
-    { id: 3, name: "Song 4", artist: "RPi Local", image: "images/local4.jpg" },
-    { id: 4, name: "Song 5", artist: "RPi Local", image: "images/local5.jpg" },
-    { id: 5, name: "Song 6", artist: "RPi Local", image: "images/local6.jpg" }
+    { id: 0, name: "RunitUp", artist: "RPi Local", image: "images/local1.jpg" },
+    { id: 1, name: "BeatIt", artist: "RPi Local", image: "images/local2.jpg" },
+    { id: 2, name: "ShapeofYou", artist: "RPi Local", image: "images/local3.jpg" },
+    { id: 3, name: "Gasolina", artist: "RPi Local", image: "images/local4.jpg" },
+    { id: 4, name: "RapGod", artist: "RPi Local", image: "images/local5.jpg" }
 ];
 
 /* ──────────────────────────────────────────────── */
