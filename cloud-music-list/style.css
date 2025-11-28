@@ -21,7 +21,6 @@ body {
 .logo {
     font-size: 20px;
     font-weight: 600;
-    color: #ffffff;
     letter-spacing: 0.5px;
 }
 
@@ -29,7 +28,7 @@ body {
     margin-left: 20px;
     font-size: 15px;
     color: #bbbbbb;
-    cursor: default;
+    cursor: pointer;
 }
 
 .links span:hover {
@@ -48,8 +47,8 @@ body {
     background: #181818;
     padding: 15px;
     border-radius: 12px;
-    cursor: pointer;
     transition: 0.25s ease;
+    cursor: pointer;
 }
 
 .card:hover {
@@ -72,9 +71,8 @@ body {
 }
 
 .artist {
-    color: #aaaaaa;
     font-size: 14px;
-    margin-top: 3px;
+    color: #aaaaaa;
 }
 
 /* PLAYER */

@@ -2,22 +2,34 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Prudhvi Cloud Music</title>
+    <title>Prudhvi’s Music Library</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav class="nav">
-    <div class="logo">Prudhvi Cloud Music</div>
+    <div class="logo">Prudhvi’s Music Library</div>
     <div class="links">
-        <span>Home</span>
-        <span>Songs</span>
+        <span onclick="switchTab('home')">Home</span>
+        <span onclick="switchTab('local')">RPi’s Local</span>
+        <span onclick="switchTab('cloud')">Cloud</span>
         <span>Library</span>
+        <span onclick="setPiIP()" style="color:#1db954;">Set Pi IP</span>
     </div>
 </nav>
 
 <main>
-    <div class="song-grid" id="songGrid"></div>
+    <div id="home" class="tabPage">
+        <div class="song-grid" id="cloudGrid"></div>
+    </div>
+
+    <div id="local" class="tabPage" style="display:none;">
+        <div class="song-grid" id="localGrid"></div>
+    </div>
+
+    <div id="cloud" class="tabPage" style="display:none;">
+        <div class="song-grid" id="cloudGrid2"></div>
+    </div>
 </main>
 
 <footer id="player">
