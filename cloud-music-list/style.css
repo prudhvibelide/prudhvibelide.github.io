@@ -1,24 +1,56 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background: #0f0f0f;
     color: #fff;
 }
 
-header {
-    background: #1db954;
-    padding: 25px;
-    text-align: center;
-    color: #000;
-    font-size: 28px;
-    font-weight: bold;
+/* TOP NAVBAR LIKE YOUTUBE MUSIC */
+.top-nav {
+    background: #181818;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 25px;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
     letter-spacing: 1px;
+    background: linear-gradient(90deg, #1db954, #1ed760);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-main {
-    padding-bottom: 100px;
+.menu span {
+    margin-left: 22px;
+    font-size: 16px;
+    color: #ccc;
+    cursor: default;
+    transition: 0.25s;
 }
 
+.menu span:hover {
+    color: #fff;
+}
+
+/* HEADER TITLE */
+header {
+    padding: 35px 20px;
+    text-align: center;
+    background: #1db954;
+    color: black;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* SONG GRID */
 .song-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -60,6 +92,7 @@ main {
     margin-top: 4px;
 }
 
+/* AUDIO PLAYER */
 footer {
     position: fixed;
     bottom: 0;
