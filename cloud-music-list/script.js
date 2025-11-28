@@ -33,15 +33,15 @@ const songs = [
 
 const grid = document.getElementById("songGrid");
 const audio = document.getElementById("audioPlayer");
-const label = document.getElementById("currentSong");
+const label = document.getElementById("songLabel");
 
 songs.forEach(song => {
     const card = document.createElement("div");
-    card.className = "song-card";
+    card.className = "card";
 
     card.innerHTML = `
         <div class="cover" style="background-image:url('${song.image}')"></div>
-        <div class="song-info">${song.name}</div>
+        <div class="title">${song.name}</div>
         <div class="artist">${song.artist}</div>
     `;
 
