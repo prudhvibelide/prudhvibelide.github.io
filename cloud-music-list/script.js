@@ -113,7 +113,7 @@ function loadLocalSongs() {
 }
 
 /* ──────────────────────────────────────────────── */
-/*   CLOUD SONG PLAYBACK                           */
+/*   CLOUD SONG PLAYBACK (UPDATED)                 */
 /* ──────────────────────────────────────────────── */
 
 const audio = document.getElementById("audioPlayer");
@@ -123,11 +123,40 @@ function playCloudSong(id) {
     const song = cloudSongs.find(s => s.id === id);
     if (!song) return;
 
-    audio.src = song.file;
-    audio.play();
-    label.textContent = `${song.name} — ${song.artist}`;
+    /* If no Pi IP configured → play in browser */
+    if (!PI_IP) {
+        audio.src = song.file;
+        audio.play();
+        label.textContent = `${song.name} — ${song.artist} (Browser)`;
 
-    // Update URL for sharing
+        const newURL = `${window.location.pathname}?song=${id}`;
+        window.history.pushState({}, "", newURL);
+        return;
+    }
+
+    /* Convert string ID → numeric index (0–4) */
+    const index = cloudSongs.findIndex(s => s.id === id);
+
+    /* Try to play on the Pi */
+    fetch(`http://${PI_IP}:8888/cloud?song=${index}`)
+        .then(response => {
+            if (!response.ok) throw new Error("Pi rejected request");
+
+            /* Stop browser audio */
+            audio.pause();
+            audio.src = "";
+
+            label.textContent = `${song.name} — ${song.artist} (Playing on Pi)`;
+        })
+        .catch(err => {
+            console.error("Pi unreachable, falling back", err);
+
+            /* Browser fallback */
+            audio.src = song.file;
+            audio.play();
+            label.textContent = `${song.name} — ${song.artist} (Browser Fallback)`;
+        });
+
     const newURL = `${window.location.pathname}?song=${id}`;
     window.history.pushState({}, "", newURL);
 }
@@ -140,7 +169,11 @@ function playLocalSong(id) {
     if (!PI_IP) return alert("Set your Pi IP first!");
 
     fetch(`http://${PI_IP}:8888/local?song=${id}`)
-        .then(() => alert("Pi playing local song " + (id + 1)))
+        .then(() => {
+            label.textContent = `${localSongs[id].name} — Playing on Pi`;
+            audio.pause();
+            audio.src = "";
+        })
         .catch(() => alert("Cannot reach Raspberry Pi"));
 }
 
