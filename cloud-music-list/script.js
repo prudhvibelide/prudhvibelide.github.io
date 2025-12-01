@@ -72,8 +72,10 @@ const localSongs = [
 /* ──────────────────────────────────────────────── */
 
 function loadCloudSongs() {
-    const grids = [document.getElementById("cloudGrid"),
-                   document.getElementById("cloudGrid2")];
+    const grids = [
+        document.getElementById("cloudGrid"),
+        document.getElementById("cloudGrid2")
+    ];
 
     grids.forEach(grid => {
         grid.innerHTML = "";
@@ -113,51 +115,37 @@ function loadLocalSongs() {
 }
 
 /* ──────────────────────────────────────────────── */
-/*   CLOUD SONG PLAYBACK (UPDATED)                 */
+/*   CLOUD SONG PLAYBACK                           */
 /* ──────────────────────────────────────────────── */
 
 const audio = document.getElementById("audioPlayer");
 const label = document.getElementById("songLabel");
 
-function playCloudSong(id) {
-    const song = cloudSongs.find(s => s.id === id);
-    if (!song) return;
+/*
+   FIXED: Now cloud songs play on Pi, not in browser
+*/
+function playCloudSong(idString) {
+    const index = cloudSongs.findIndex(s => s.id === idString);
+    if (index < 0) return;
 
-    /* If no Pi IP configured → play in browser */
     if (!PI_IP) {
-        audio.src = song.file;
-        audio.play();
-        label.textContent = `${song.name} — ${song.artist} (Browser)`;
-
-        const newURL = `${window.location.pathname}?song=${id}`;
-        window.history.pushState({}, "", newURL);
+        alert("Set your Pi IP first!");
         return;
     }
 
-    /* Convert string ID → numeric index (0–4) */
-    const index = cloudSongs.findIndex(s => s.id === id);
-
-    /* Try to play on the Pi */
+    // Tell the Pi to play the cloud song
     fetch(`http://${PI_IP}:8888/cloud?song=${index}`)
-        .then(response => {
-            if (!response.ok) throw new Error("Pi rejected request");
-
-            /* Stop browser audio */
+        .then(() => {
+            label.textContent = `Playing on Pi: ${cloudSongs[index].name}`;
             audio.pause();
             audio.src = "";
-
-            label.textContent = `${song.name} — ${song.artist} (Playing on Pi)`;
         })
-        .catch(err => {
-            console.error("Pi unreachable, falling back", err);
-
-            /* Browser fallback */
-            audio.src = song.file;
-            audio.play();
-            label.textContent = `${song.name} — ${song.artist} (Browser Fallback)`;
+        .catch(() => {
+            alert("Cannot reach Raspberry Pi");
         });
 
-    const newURL = `${window.location.pathname}?song=${id}`;
+    // Update URL
+    const newURL = `${window.location.pathname}?song=${idString}`;
     window.history.pushState({}, "", newURL);
 }
 
@@ -170,7 +158,7 @@ function playLocalSong(id) {
 
     fetch(`http://${PI_IP}:8888/local?song=${id}`)
         .then(() => {
-            label.textContent = `${localSongs[id].name} — Playing on Pi`;
+            label.textContent = `Playing on Pi: ${localSongs[id].name}`;
             audio.pause();
             audio.src = "";
         })
