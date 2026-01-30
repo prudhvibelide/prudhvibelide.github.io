@@ -30,35 +30,42 @@
       margin:0;
       font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial;
       color:var(--text);
-      background: radial-gradient(1200px 600px at 15% 10%, #1b1b1c 0%, #111 60%, #0b0b0c 100%);
+      background: radial-gradient(1200px 650px at 15% 10%, #1b1b1c 0%, #111 60%, #0b0b0c 100%);
       background-attachment:fixed;
     }
 
-    .container{max-width:1200px; margin:30px auto; padding:0 16px}
+    .container{max-width:1200px; margin:26px auto; padding:0 16px}
 
     /* Header */
     .header{
       display:flex; align-items:center; justify-content:space-between;
-      gap:16px; margin-bottom:18px;
+      gap:16px; margin-bottom:14px;
     }
     .brand{display:flex; align-items:center; gap:14px}
     .brand-badge{
       width:56px;height:56px;border-radius:12px;
       background:var(--gold);
-      color:#1a1a1a; font-weight:900; display:grid; place-items:center; font-size:22px;
+      color:#1a1a1a; font-weight:950; display:grid; place-items:center; font-size:22px;
       box-shadow:var(--shadow);
     }
-    .brand h1{margin:0; font-size:28px; letter-spacing:.2px; font-weight:900}
-    .brand small{display:block; margin-top:2px; color:var(--muted); font-weight:700}
+    .brand h1{margin:0; font-size:26px; letter-spacing:.2px; font-weight:950}
+    .brand small{display:block; margin-top:2px; color:var(--muted); font-weight:750}
 
-    .header-actions{display:flex; gap:10px; align-items:center}
+    .header-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
     .pill{
       padding:8px 12px; border-radius:999px; background:rgba(207,184,124,.14);
       border:1px solid rgba(207,184,124,.35);
-      color:var(--gold); font-weight:900; letter-spacing:.2px;
+      color:var(--gold); font-weight:950; letter-spacing:.2px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:var(--gold);
+      box-shadow:0 0 0 3px rgba(207,184,124,.18);
+      display:inline-block;
     }
     .btn{
-      border:none; border-radius:10px; padding:10px 14px; font-weight:900; cursor:pointer;
+      border:none; border-radius:12px; padding:10px 14px; font-weight:950; cursor:pointer;
       background:var(--panel-2); color:#ddd; display:flex; align-items:center; gap:8px;
       box-shadow:0 4px 12px rgba(0,0,0,.35);
     }
@@ -67,46 +74,59 @@
     .btn:hover{filter:brightness(1.06)}
     .btn:disabled{opacity:.55; cursor:not-allowed}
 
-    /* Cards */
-    .cards{
-      display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
-      margin:18px 0 22px;
-    }
-    .card{
-      background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
-      border-radius:var(--radius-lg); padding:20px; box-shadow:var(--shadow);
-      border:1px solid var(--border);
-    }
-    .card h4{color:var(--gold); margin:0 0 8px 0; font-weight:900; letter-spacing:.3px}
-    .card .big{font-size:22px; font-weight:900}
-    .card .sub{color:var(--subtle); font-weight:700}
-
-    /* Home */
+    /* Home hero */
     .hero{
-      background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
+      background:
+        radial-gradient(600px 260px at 10% 10%, rgba(207,184,124,.18) 0%, rgba(207,184,124,0) 60%),
+        linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
       border:1px solid var(--border);
       border-radius:var(--radius-lg);
       padding:22px;
       box-shadow:var(--shadow);
-      margin-bottom:18px;
+      margin-bottom:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; right:-120px; top:-120px;
+      width:320px; height:320px;
+      border-radius:80px;
+      background:rgba(207,184,124,.08);
+      border:1px solid rgba(207,184,124,.12);
+      transform:rotate(18deg);
     }
     .hero-title{
-      font-size:26px; font-weight:950; margin:0 0 6px 0;
+      font-size:38px;
+      line-height:1.05;
+      font-weight:980;
+      margin:0 0 10px 0;
+      letter-spacing:.2px;
     }
     .hero-desc{
       margin:0;
       color:var(--muted);
-      font-weight:650;
+      font-weight:700;
       line-height:1.35;
+      max-width:820px;
     }
-    .hall-grid{
+
+    .home-split{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: 1.05fr .95fr;
       gap:16px;
       margin-top:16px;
+      align-items:start;
+    }
+
+    /* Hall tiles */
+    .hall-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
     }
     .hall-card{
-      background:var(--panel-2);
+      background:linear-gradient(180deg, var(--panel-2) 0%, #212122 100%);
       border:1px solid #303033;
       border-radius:16px;
       padding:16px;
@@ -115,24 +135,113 @@
       transition:transform .08s ease, filter .08s ease;
       position:relative;
       overflow:hidden;
+      min-height:98px;
     }
     .hall-card:hover{filter:brightness(1.05); transform:translateY(-1px)}
-    .hall-card .kicker{color:var(--gold); font-weight:950; letter-spacing:.3px}
-    .hall-card .name{font-size:22px; font-weight:950; margin:6px 0 8px}
-    .hall-card .desc{color:#cfcfcf; font-weight:650; margin:0}
-    .hall-card .corner{
-      position:absolute; right:-18px; top:-18px;
-      width:90px; height:90px; border-radius:28px;
+    .hall-card .kicker{color:var(--gold); font-weight:980; letter-spacing:.3px; font-size:12px}
+    .hall-card .name{font-size:18px; font-weight:980; margin:8px 0 0}
+    .hall-card .sub{margin:6px 0 0; color:#cfcfcf; font-weight:650; font-size:13px}
+    .hall-card .notif{
+      position:absolute; right:14px; top:14px;
+      width:12px; height:12px; border-radius:999px;
+      background:var(--gold);
+      box-shadow:0 0 0 4px rgba(207,184,124,.18);
+      display:none;
+    }
+    .hall-card.new .notif{display:block}
+
+    /* Home feed */
+    .feed{
+      background:linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      border:1px solid var(--border);
+      border-radius:var(--radius-lg);
+      padding:16px;
+      box-shadow:var(--shadow);
+      min-height:240px;
+    }
+    .feed-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:10px;
+    }
+    .feed-title{
+      font-size:18px;
+      font-weight:980;
+      letter-spacing:.2px;
+      margin:0;
+    }
+    .feed-sub{
+      color:var(--subtle);
+      font-weight:700;
+      margin:2px 0 0;
+      font-size:13px;
+    }
+    .feed-list{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .feed-item{
+      background:var(--panel-3);
+      border:1px solid #3a3a3d;
+      border-radius:14px;
+      padding:12px;
+    }
+    .feed-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:8px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:5px 10px;
+      border-radius:999px;
       background:rgba(207,184,124,.14);
-      border:1px solid rgba(207,184,124,.18);
-      transform:rotate(12deg);
+      border:1px solid rgba(207,184,124,.28);
+      color:var(--gold);
+      font-weight:950;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .chip.gray{
+      background:#2f2f31;
+      border-color:#3a3a3d;
+      color:#d4d4d6;
+      font-weight:850;
+    }
+    .feed-msg{
+      margin:0;
+      color:#e9e9e9;
+      font-weight:700;
+      line-height:1.32;
+      white-space:pre-wrap;
+    }
+    .feed-meta{
+      margin:10px 0 0;
+      color:var(--subtle);
+      font-weight:700;
+      font-size:12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .feed-item.new{
+      border-color:rgba(207,184,124,.45);
+      box-shadow:0 0 0 3px rgba(207,184,124,.10);
+    }
+    .empty{
+      padding:14px;
+      border-radius:14px;
+      background:#202022;
+      border:1px dashed #3a3a3d;
+      color:#cfcfcf;
+      font-weight:700;
     }
 
     /* Tabs */
     .tabs{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 12px}
     .tab{
       background:var(--panel-2); color:#cfcfcf; border:1px solid #2f2f31;
-      padding:10px 14px; border-radius:10px; font-weight:950; cursor:pointer;
+      padding:10px 14px; border-radius:12px; font-weight:980; cursor:pointer;
       display:flex; align-items:center; gap:8px; box-shadow:0 8px 16px rgba(0,0,0,.35);
       user-select:none;
     }
@@ -146,37 +255,62 @@
       padding:18px;
       box-shadow:var(--shadow);
     }
-    .section-header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px}
-    .section-title{font-size:20px; font-weight:950}
+    .section-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .section-title{font-size:20px; font-weight:980}
+
     .search{
       display:flex; align-items:center; gap:10px; background:var(--panel-3);
-      border-radius:10px; padding:10px 12px; border:1px solid #38383a;
+      border-radius:12px; padding:10px 12px; border:1px solid #38383a;
       margin:10px 0 14px;
     }
-    .search input{flex:1; background:transparent; border:none; outline:none; color:#e7e7e7; font-weight:650}
+    .search input{flex:1; background:transparent; border:none; outline:none; color:#e7e7e7; font-weight:700}
+
+    /* Stats row on hall view */
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(6, minmax(0,1fr));
+      gap:10px;
+      margin:12px 0 14px;
+    }
+    .stat{
+      background:linear-gradient(180deg, var(--panel-2) 0%, #212122 100%);
+      border:1px solid #303033;
+      border-radius:16px;
+      padding:12px;
+      box-shadow:0 10px 18px rgba(0,0,0,.35);
+    }
+    .stat .label{color:var(--subtle); font-weight:850; font-size:12px}
+    .stat .value{font-size:20px; font-weight:980; margin-top:6px}
+    .stat.highlight{
+      border-color:rgba(207,184,124,.35);
+      background:
+        radial-gradient(250px 120px at 10% 10%, rgba(207,184,124,.18) 0%, rgba(207,184,124,0) 60%),
+        linear-gradient(180deg, var(--panel-2) 0%, #212122 100%);
+    }
 
     /* Table */
     table{width:100%; border-collapse:separate; border-spacing:0 10px}
     thead th{
-      color:var(--gold); font-size:13px; text-align:left; font-weight:950;
+      color:var(--gold); font-size:13px; text-align:left; font-weight:980;
       padding:8px 10px;
     }
-    tbody tr{
-      background:var(--panel-2);
-      box-shadow:0 8px 14px rgba(0,0,0,.35);
-    }
+    tbody tr{background:var(--panel-2); box-shadow:0 8px 14px rgba(0,0,0,.35)}
     tbody td{
       padding:12px 10px;
       border-top:1px solid #303033; border-bottom:1px solid #303033;
       color:#ddd; vertical-align:top;
       word-break:break-word;
     }
-    tbody tr td:first-child{border-left:1px solid #303033; border-top-left-radius:10px; border-bottom-left-radius:10px}
-    tbody tr td:last-child{border-right:1px solid #303033; border-top-right-radius:10px; border-bottom-right-radius:10px}
+    tbody tr td:first-child{border-left:1px solid #303033; border-top-left-radius:12px; border-bottom-left-radius:12px}
+    tbody tr td:last-child{border-right:1px solid #303033; border-top-right-radius:12px; border-bottom-right-radius:12px}
 
     .badge{
       display:inline-block; padding:4px 10px; border-radius:9px;
-      font-size:12px; font-weight:950;
+      font-size:12px; font-weight:980;
       background:var(--panel-3); color:#eee; border:1px solid #3b3b3d;
       white-space:nowrap;
     }
@@ -196,34 +330,36 @@
     .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); z-index:50}
     .modal.active{display:flex}
     .dialog{
-      width:min(780px,92vw); background:var(--panel-2);
+      width:min(820px,92vw); background:var(--panel-2);
       border:1px solid #2e2e30; border-radius:16px;
       box-shadow:var(--shadow);
       padding:18px;
     }
-    .dialog h3{margin:0 0 10px 0; font-weight:950}
+    .dialog h3{margin:0 0 10px 0; font-weight:980}
     .form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
     .form .full{grid-column:1/-1}
     .form label{
-      font-size:12.5px; color:var(--muted); font-weight:950; display:block; margin-bottom:6px;
+      font-size:12.5px; color:var(--muted); font-weight:980; display:block; margin-bottom:6px;
     }
     .form input,.form select,.form textarea{
       width:100%; background:var(--panel-3); border:1px solid #3a3a3d;
-      color:#e8e8e8; border-radius:10px; padding:10px; font-weight:650;
+      color:#e8e8e8; border-radius:12px; padding:10px; font-weight:700;
     }
     .form textarea{min-height:110px; resize:vertical}
     .dialog-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:14px}
 
-    /* Links */
     a{color:#d7c890; text-decoration:none}
     a:hover{text-decoration:underline}
 
-    /* Small screens */
-    @media (max-width: 860px){
-      .cards{grid-template-columns:1fr}
+    @media (max-width: 980px){
+      .home-split{grid-template-columns:1fr}
+      .hall-grid{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(3, minmax(0,1fr))}
+    }
+    @media (max-width: 560px){
+      .stats{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .hero-title{font-size:32px}
       .form{grid-template-columns:1fr}
-      .header{flex-direction:column; align-items:flex-start}
-      .header-actions{width:100%; justify-content:flex-start; flex-wrap:wrap}
     }
   </style>
 </head>
@@ -239,10 +375,11 @@
         </div>
       </div>
       <div class="header-actions">
-        <span class="pill" id="hall-pill" style="display:none;"></span>
+        <span class="pill" id="hall-pill" style="display:none;">
+          <span id="hall-pill-dot" class="dot" style="display:none;"></span>
+          <span id="hall-pill-text"></span>
+        </span>
         <button class="btn" id="homeBtn" style="display:none;">🏠 <strong>Home</strong></button>
-        <button class="btn ghost" id="exportBtn" style="display:none;">⬇️ <strong>Export Hall JSON</strong></button>
-        <button class="btn primary" id="newBtn" style="display:none;">➕ <strong>New Entry</strong></button>
       </div>
     </div>
 
@@ -251,51 +388,31 @@
       <div class="hero">
         <p class="hero-title">Welcome to Conference Services</p>
         <p class="hero-desc">
-          Choose a hall to open its desk tools. Each hall keeps its own call logs, mail list, lost and found, desk notes, and documents.
-          All entries are stored locally in your browser until you delete them.
+          Select a hall to manage call logs, mail, lost and found, desk notes, and documents. Desk notes from all halls are shown below for quick updates.
         </p>
 
-        <div class="hall-grid" id="hallGrid"></div>
-      </div>
+        <div class="home-split">
+          <div>
+            <div class="hall-grid" id="hallGrid"></div>
+          </div>
 
-      <div class="cards">
-        <div class="card">
-          <h4>Manager</h4>
-          <div class="big">Conference Services</div>
-          <div class="sub">Front Desk Operations</div>
-        </div>
-        <div class="card">
-          <h4>Data Storage</h4>
-          <div class="big">Local Browser Storage</div>
-          <div class="sub">Survives refresh until deleted</div>
-        </div>
-        <div class="card">
-          <h4>Tip</h4>
-          <div class="big">One Hall at a Time</div>
-          <div class="sub">Pick Hall A–E to manage entries</div>
+          <div class="feed">
+            <div class="feed-head">
+              <div>
+                <p class="feed-title">Desk Notes</p>
+                <p class="feed-sub">All halls, newest first</p>
+              </div>
+              <button class="btn ghost" id="markSeenBtn">✓ <strong>Mark all seen</strong></button>
+            </div>
+            <div id="feedList" class="feed-list"></div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- HALL VIEW -->
     <div id="hallView" style="display:none;">
-      <div class="cards">
-        <div class="card">
-          <h4>Hall</h4>
-          <div class="big" id="hallNameCard">Hall A</div>
-          <div class="sub">Active desk workspace</div>
-        </div>
-        <div class="card">
-          <h4>Today</h4>
-          <div class="big" id="todayCard">–</div>
-          <div class="sub">Local time</div>
-        </div>
-        <div class="card">
-          <h4>Hall Totals</h4>
-          <div class="big" id="totalsCard">–</div>
-          <div class="sub">Calls, Mail, Lost, Found, Notes, Docs</div>
-        </div>
-      </div>
+      <div class="stats" id="statsRow"></div>
 
       <div class="tabs" id="tabs"></div>
 
@@ -303,7 +420,7 @@
         <div class="section-header">
           <div class="section-title" id="sectionTitle">Desk Notes</div>
           <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <button class="btn ghost" id="clearSearchBtn" title="Clear search">🧹 <strong>Clear</strong></button>
+            <button class="btn ghost" id="clearSearchBtn">🧹 <strong>Clear</strong></button>
             <button class="btn primary" id="addBtn">➕ <strong>Add</strong></button>
           </div>
         </div>
@@ -333,20 +450,36 @@
 
   <script>
     /* ===========================
-       Persistence Model (per hall)
+       Configuration
        =========================== */
 
-    const HALLS = ["Hall A","Hall B","Hall C","Hall D","Hall E"];
-    const TAB_DEFS = [
-      { id:"deskNotes", label:"📝 Desk Notes", title:"Desk Notes", addLabel:"Add Note" },
-      { id:"callLog",  label:"📞 Call Log",   title:"Call Log",  addLabel:"Add Call" },
-      { id:"mailList", label:"📬 Mail List",  title:"Mail List", addLabel:"Add Mail" },
-      { id:"lost",     label:"🔍 Lost",       title:"Lost Items",addLabel:"Add Lost Item" },
-      { id:"found",    label:"🧾 Found",      title:"Found Items",addLabel:"Add Found Item" },
-      { id:"docs",     label:"📑 Documents",  title:"Documents", addLabel:"Add Document" },
+    const HALLS = [
+      "Williams Village Hall",
+      "Farrand Hall",
+      "Aden Hall",
+      "Kittredge Central Hall",
+      "Hallett Hall"
     ];
 
-    const STORE_KEY = "cs_edesk_v2";
+    const TAB_DEFS = [
+      { id:"deskNotes", label:"📝 Desk Notes", title:"Desk Notes" },
+      { id:"callLog",  label:"📞 Call Log",   title:"Call Log" },
+      { id:"mailList", label:"📬 Mail List",  title:"Mail List" },
+      { id:"lost",     label:"🔍 Lost",       title:"Lost Items" },
+      { id:"found",    label:"🧾 Found",      title:"Found Items" },
+      { id:"docs",     label:"📑 Documents",  title:"Documents" },
+    ];
+
+    const STORE_KEY = "cs_edesk_v3";
+    const SEEN_KEY = "cs_edesk_seen_v3";  // tracks what this browser has seen
+
+    const uid = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
+    const e = (s)=> String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const ea = (s)=> String(s ?? "").replace(/"/g,'&quot;');
+
+    /* ===========================
+       Storage
+       =========================== */
 
     const store = {
       loadAll(){
@@ -364,25 +497,45 @@
       ensureHall(data, hallName){
         if(!data.halls) data.halls = {};
         if(!data.halls[hallName]){
-          data.halls[hallName] = {
-            callLog: [],
-            mailList: [],
-            lost: [],
-            found: [],
-            deskNotes: [],
-            docs: []
-          };
+          data.halls[hallName] = { callLog:[], mailList:[], lost:[], found:[], deskNotes:[], docs:[] };
         }
         return data;
       }
     };
 
-    const uid = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
-    const e = (s)=> String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-    const ea = (s)=> String(s ?? "").replace(/"/g,'&quot;');
+    const seen = {
+      load(){
+        try {
+          const raw = localStorage.getItem(SEEN_KEY);
+          if(!raw) return { deskNotesSeenAt: {} };
+          return JSON.parse(raw);
+        } catch {
+          return { deskNotesSeenAt: {} };
+        }
+      },
+      save(v){
+        localStorage.setItem(SEEN_KEY, JSON.stringify(v));
+      },
+      getHallSeenAt(hall){
+        const s = this.load();
+        return Number(s.deskNotesSeenAt?.[hall] || 0);
+      },
+      setHallSeenAt(hall, ts){
+        const s = this.load();
+        if(!s.deskNotesSeenAt) s.deskNotesSeenAt = {};
+        s.deskNotesSeenAt[hall] = ts;
+        this.save(s);
+      },
+      markAllSeen(ts){
+        const s = this.load();
+        if(!s.deskNotesSeenAt) s.deskNotesSeenAt = {};
+        HALLS.forEach(h => s.deskNotesSeenAt[h] = ts);
+        this.save(s);
+      }
+    };
 
     /* ===========================
-       App State
+       App state
        =========================== */
 
     const state = {
@@ -399,11 +552,13 @@
     const homeView = document.getElementById("homeView");
     const hallView = document.getElementById("hallView");
     const hallGrid = document.getElementById("hallGrid");
+    const feedList = document.getElementById("feedList");
+    const markSeenBtn = document.getElementById("markSeenBtn");
 
     const hallPill = document.getElementById("hall-pill");
+    const hallPillText = document.getElementById("hall-pill-text");
+    const hallPillDot = document.getElementById("hall-pill-dot");
     const homeBtn = document.getElementById("homeBtn");
-    const exportBtn = document.getElementById("exportBtn");
-    const newBtn = document.getElementById("newBtn");
 
     const tabsEl = document.getElementById("tabs");
     const sectionTitle = document.getElementById("sectionTitle");
@@ -411,10 +566,7 @@
     const addBtn = document.getElementById("addBtn");
     const searchInput = document.getElementById("searchInput");
     const clearSearchBtn = document.getElementById("clearSearchBtn");
-
-    const hallNameCard = document.getElementById("hallNameCard");
-    const todayCard = document.getElementById("todayCard");
-    const totalsCard = document.getElementById("totalsCard");
+    const statsRow = document.getElementById("statsRow");
 
     const modal = document.getElementById("modal");
     const modalTitle = document.getElementById("modalTitle");
@@ -431,7 +583,6 @@
       state.tab = "deskNotes";
       state.search = "";
       state.editing = null;
-      setHash("");
       render();
     }
 
@@ -440,7 +591,11 @@
       state.tab = "deskNotes";
       state.search = "";
       state.editing = null;
-      setHash("hall=" + encodeURIComponent(hallName) + "&tab=" + encodeURIComponent(state.tab));
+
+      // mark this hall's desk notes as seen when entering the hall
+      // but only if user is opening the deskNotes tab (default yes)
+      markHallDeskNotesSeen(hallName);
+
       render();
     }
 
@@ -449,44 +604,35 @@
       state.search = "";
       state.editing = null;
       searchInput.value = "";
-      setHash("hall=" + encodeURIComponent(state.hall) + "&tab=" + encodeURIComponent(state.tab));
-      render();
-    }
 
-    function setHash(s){
-      const h = s ? "#" + s : "";
-      if(location.hash !== h) location.hash = h;
-    }
-
-    function parseHash(){
-      const h = (location.hash || "").replace(/^#/, "").trim();
-      if(!h) return { hall:null, tab:null };
-      const params = new URLSearchParams(h);
-      const hall = params.get("hall");
-      const tab = params.get("tab");
-      return {
-        hall: hall ? decodeURIComponent(hall) : null,
-        tab: tab ? decodeURIComponent(tab) : null
-      };
-    }
-
-    window.addEventListener("hashchange", () => {
-      const p = parseHash();
-      if(!p.hall){
-        state.hall = null;
-        state.tab = "deskNotes";
-      } else {
-        state.hall = p.hall;
-        state.tab = p.tab || "deskNotes";
+      // If user switches to desk notes tab, mark seen
+      if(state.tab === "deskNotes" && state.hall){
+        markHallDeskNotesSeen(state.hall);
       }
-      state.search = "";
-      searchInput.value = "";
+
       render();
-    });
+    }
+
+    function markHallDeskNotesSeen(hall){
+      const all = store.loadAll();
+      store.ensureHall(all, hall);
+      const notes = all.halls[hall].deskNotes || [];
+      const latestTs = notes.reduce((m, n) => Math.max(m, Number(n._ts || 0)), 0);
+      if(latestTs > 0) seen.setHallSeenAt(hall, latestTs);
+    }
 
     /* ===========================
-       Data Helpers
+       Helpers
        =========================== */
+
+    function nowTs(){ return Date.now(); }
+
+    function nowString(){
+      const d = new Date();
+      const ds = d.toLocaleDateString(undefined, {year:"numeric", month:"short", day:"2-digit"});
+      const ts = d.toLocaleTimeString(undefined, {hour:"numeric", minute:"2-digit"});
+      return ds + " • " + ts;
+    }
 
     function getHallData(){
       const all = store.loadAll();
@@ -499,14 +645,10 @@
       return hallObj[state.tab] || [];
     }
 
-    function saveRowsForTab(all, rows){
-      all.halls[state.hall][state.tab] = rows;
-      store.saveAll(all);
-    }
-
-    function computeTotals(all){
-      const h = all.halls[state.hall];
-      const totals = {
+    function computeHallTotals(all, hall){
+      store.ensureHall(all, hall);
+      const h = all.halls[hall];
+      return {
         calls: (h.callLog || []).length,
         mail: (h.mailList || []).length,
         lost: (h.lost || []).length,
@@ -514,29 +656,69 @@
         notes: (h.deskNotes || []).length,
         docs: (h.docs || []).length,
       };
-      return totals;
     }
 
-    function nowString(){
-      const d = new Date();
-      const ds = d.toLocaleDateString(undefined, {year:"numeric", month:"short", day:"2-digit"});
-      const ts = d.toLocaleTimeString(undefined, {hour:"numeric", minute:"2-digit"});
-      return ds + " • " + ts;
+    function getAllDeskNotesFeed(){
+      const all = store.loadAll();
+      const out = [];
+      HALLS.forEach(h => {
+        store.ensureHall(all, h);
+        const notes = all.halls[h].deskNotes || [];
+        notes.forEach(n => out.push({ ...n, _hall: h }));
+      });
+      out.sort((a,b) => Number(b._ts || 0) - Number(a._ts || 0));
+      return out;
+    }
+
+    function hallHasNewDeskNotes(hall){
+      const all = store.loadAll();
+      store.ensureHall(all, hall);
+      const notes = all.halls[hall].deskNotes || [];
+      const seenAt = seen.getHallSeenAt(hall);
+      return notes.some(n => Number(n._ts || 0) > seenAt);
     }
 
     /* ===========================
-       Rendering
+       Render
        =========================== */
 
     function renderHome(){
-      hallGrid.innerHTML = HALLS.map(h => `
-        <div class="hall-card" onclick="appPickHall('${ea(h)}')">
-          <div class="corner"></div>
-          <div class="kicker">Select Hall</div>
-          <div class="name">${e(h)}</div>
-          <p class="desc">Open logs and notes for ${e(h)}.</p>
-        </div>
-      `).join("");
+      hallGrid.innerHTML = HALLS.map(h => {
+        const isNew = hallHasNewDeskNotes(h);
+        return `
+          <div class="hall-card ${isNew ? "new" : ""}" onclick="appPickHall('${ea(h)}')">
+            <span class="notif"></span>
+            <div class="kicker">Select Hall</div>
+            <div class="name">${e(h)}</div>
+            <div class="sub">${isNew ? "New desk note update" : "No new desk notes"}</div>
+          </div>
+        `;
+      }).join("");
+
+      const feed = getAllDeskNotesFeed().slice(0, 12);
+      if(feed.length === 0){
+        feedList.innerHTML = `<div class="empty">No desk notes yet. Add a note in any hall and it will appear here.</div>`;
+        return;
+      }
+
+      feedList.innerHTML = feed.map(n => {
+        const seenAt = seen.getHallSeenAt(n._hall);
+        const isNew = Number(n._ts || 0) > seenAt;
+        return `
+          <div class="feed-item ${isNew ? "new" : ""}">
+            <div class="feed-top">
+              <span class="chip">${e(n._hall)}</span>
+              <span class="chip gray">${e(n.priority || "FYI")}</span>
+            </div>
+            <p class="feed-msg">${e(n.message || "")}</p>
+            <div class="feed-meta">
+              <span>By: ${e(n.addedBy || "")}</span>
+              <span>Time: ${e(n.dateTime || "")}</span>
+              <a href="#" onclick="appOpenHallNotes('${ea(n._hall)}');return false;">Open hall</a>
+            </div>
+          </div>
+        `;
+      }).join("");
     }
 
     function renderTabs(){
@@ -547,35 +729,44 @@
       `).join("");
     }
 
-    function renderHallHeaderCards(){
-      hallNameCard.textContent = state.hall;
-      todayCard.textContent = nowString();
+    function renderHallHeader(){
+      hallPill.style.display = "flex";
+      homeBtn.style.display = "flex";
+      hallPillText.textContent = state.hall;
 
-      const all = getHallData();
-      const totals = computeTotals(all);
-      totalsCard.textContent = `${totals.calls}, ${totals.mail}, ${totals.lost}, ${totals.found}, ${totals.notes}, ${totals.docs}`;
+      const hasNew = hallHasNewDeskNotes(state.hall);
+      hallPillDot.style.display = hasNew ? "inline-block" : "none";
+
+      homeBtn.onclick = routeToHome;
+    }
+
+    function renderStats(){
+      const all = store.loadAll();
+      const t = computeHallTotals(all, state.hall);
+
+      const make = (label, value, highlight=false) => `
+        <div class="stat ${highlight ? "highlight" : ""}">
+          <div class="label">${e(label)}</div>
+          <div class="value">${e(String(value))}</div>
+        </div>
+      `;
+
+      statsRow.innerHTML =
+        make("Calls", t.calls, true) +
+        make("Mail", t.mail) +
+        make("Lost", t.lost) +
+        make("Found", t.found) +
+        make("Notes", t.notes, true) +
+        make("Docs", t.docs);
     }
 
     function renderHallControls(){
-      hallPill.style.display = "inline-block";
-      hallPill.textContent = state.hall;
-
-      homeBtn.style.display = "flex";
-      exportBtn.style.display = "flex";
-      newBtn.style.display = "flex";
-
-      newBtn.onclick = () => openModalForTab(state.tab);
-      homeBtn.onclick = () => routeToHome();
-      exportBtn.onclick = () => exportHall();
-
       addBtn.onclick = () => openModalForTab(state.tab);
-
       clearSearchBtn.onclick = () => {
         state.search = "";
         searchInput.value = "";
         renderContent();
       };
-
       searchInput.oninput = (ev) => {
         state.search = ev.target.value || "";
         renderContent();
@@ -589,9 +780,7 @@
       const all = getHallData();
       const rows = getRowsForTab(all);
       const q = (state.search || "").toLowerCase();
-      const filtered = q
-        ? rows.filter(r => JSON.stringify(r).toLowerCase().includes(q))
-        : rows;
+      const filtered = q ? rows.filter(r => JSON.stringify(r).toLowerCase().includes(q)) : rows;
 
       if(state.tab === "callLog") renderCallLog(filtered);
       else if(state.tab === "mailList") renderMailList(filtered);
@@ -599,9 +788,9 @@
       else if(state.tab === "found") renderFound(filtered);
       else if(state.tab === "deskNotes") renderDeskNotes(filtered);
       else if(state.tab === "docs") renderDocs(filtered);
-      else contentArea.innerHTML = `<div class="card"><div class="big">Unknown tab</div></div>`;
+      else contentArea.innerHTML = `<div class="empty">Unknown tab</div>`;
 
-      renderHallHeaderCards();
+      renderStats();
     }
 
     function render(){
@@ -610,22 +799,21 @@
         hallView.style.display = "none";
         hallPill.style.display = "none";
         homeBtn.style.display = "none";
-        exportBtn.style.display = "none";
-        newBtn.style.display = "none";
         renderHome();
         return;
       }
 
       homeView.style.display = "none";
       hallView.style.display = "block";
-
+      renderHallHeader();
       renderTabs();
+      renderStats();
       renderHallControls();
       renderContent();
     }
 
     /* ===========================
-       Table Renderers
+       Tables
        =========================== */
 
     function actionsCellHTML(tabId, rowId){
@@ -635,6 +823,13 @@
           <button class="icon-btn" title="Delete" onclick="appDelete('${ea(tabId)}','${ea(rowId)}')">🗑️</button>
         </div>
       `;
+    }
+
+    function priorityBadge(p){
+      const v = (p || "FYI").toUpperCase();
+      if(v === "URGENT") return `<span class="badge bad">Urgent</span>`;
+      if(v === "IMPORTANT") return `<span class="badge warn">Important</span>`;
+      return `<span class="badge gray">FYI</span>`;
     }
 
     function renderCallLog(rows){
@@ -675,12 +870,12 @@
             <tr>
               <th>Recipient</th>
               <th>From</th>
-              <th>Carrier/Type</th>
+              <th>Carrier</th>
               <th>Tracking</th>
               <th>Received</th>
               <th>Stored Location</th>
               <th>Status</th>
-              <th>Picked Up</th>
+              <th>Pickup Details</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -709,13 +904,13 @@
           <thead>
             <tr>
               <th>Item</th>
-              <th>Owner/Guest</th>
+              <th>Owner</th>
               <th>Contact</th>
               <th>Lost Date/Time</th>
               <th>Where Lost</th>
               <th>Notes</th>
               <th>Resolution</th>
-              <th>Done</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -748,7 +943,7 @@
               <th>Found Where</th>
               <th>Added By</th>
               <th>Notes</th>
-              <th>Claimed</th>
+              <th>Status</th>
               <th>Claim Details</th>
               <th>Actions</th>
             </tr>
@@ -823,15 +1018,8 @@
       `;
     }
 
-    function priorityBadge(p){
-      const v = (p || "FYI").toUpperCase();
-      if(v === "URGENT") return `<span class="badge bad">Urgent</span>`;
-      if(v === "IMPORTANT") return `<span class="badge warn">Important</span>`;
-      return `<span class="badge gray">FYI</span>`;
-    }
-
     /* ===========================
-       Modal Forms
+       Modal
        =========================== */
 
     function openModalForTab(tabId, rowId = null){
@@ -857,7 +1045,7 @@
         modalForm.innerHTML = `
           <div><label>Who called</label><input id="whoCalled" value="${ea(v(row?.whoCalled))}" placeholder="Name"/></div>
           <div><label>Phone number</label><input id="phoneNumber" value="${ea(v(row?.phoneNumber))}" placeholder="(303) 555-1234"/></div>
-          <div class="full"><label>Call date and time</label><input id="callDateTime" value="${ea(v(row?.callDateTime) || nowString())}" placeholder="Jan 30, 2026 • 10:15 AM"/></div>
+          <div class="full"><label>Call date and time</label><input id="callDateTime" value="${ea(v(row?.callDateTime) || nowString())}"/></div>
           <div class="full"><label>Message</label><textarea id="message" placeholder="What did they say?">${e(v(row?.message))}</textarea></div>
           <div><label>Who took the call</label><input id="takenBy" value="${ea(v(row?.takenBy))}" placeholder="Staff name"/></div>
           <div><label>Best time/date to call back</label><input id="bestCallback" value="${ea(v(row?.bestCallback))}" placeholder="Tomorrow 2 PM"/></div>
@@ -866,38 +1054,38 @@
 
       if(tabId === "mailList"){
         modalForm.innerHTML = `
-          <div><label>Recipient (guest or staff)</label><input id="recipient" value="${ea(v(row?.recipient))}" placeholder="Name"/></div>
-          <div><label>From (sender)</label><input id="from" value="${ea(v(row?.from))}" placeholder="Amazon, USPS, Person"/></div>
-          <div><label>Carrier/Type</label><input id="carrier" value="${ea(v(row?.carrier))}" placeholder="USPS, UPS, FedEx, Envelope"/></div>
-          <div><label>Tracking #</label><input id="tracking" value="${ea(v(row?.tracking))}" placeholder="Optional"/></div>
-          <div class="full"><label>Received date and time</label><input id="receivedDateTime" value="${ea(v(row?.receivedDateTime) || nowString())}" /></div>
+          <div><label>Recipient</label><input id="recipient" value="${ea(v(row?.recipient))}" placeholder="Name"/></div>
+          <div><label>From</label><input id="from" value="${ea(v(row?.from))}" placeholder="Amazon, USPS, Person"/></div>
+          <div><label>Carrier</label><input id="carrier" value="${ea(v(row?.carrier))}" placeholder="USPS, UPS, FedEx"/></div>
+          <div><label>Tracking</label><input id="tracking" value="${ea(v(row?.tracking))}" placeholder="Optional"/></div>
+          <div class="full"><label>Received date and time</label><input id="receivedDateTime" value="${ea(v(row?.receivedDateTime) || nowString())}"/></div>
           <div><label>Stored location</label><input id="storageLocation" value="${ea(v(row?.storageLocation))}" placeholder="Shelf A, Locker 2"/></div>
-          <div><label>Picked up</label>
+          <div><label>Status</label>
             <select id="pickedUpDone">
               <option value="false">At Desk</option>
               <option value="true">Picked Up</option>
             </select>
           </div>
-          <div class="full"><label>Picked up details (who, contact, date/time)</label><input id="pickedUpDetails" value="${ea(v(row?.pickedUpDetails))}" placeholder="Picked up by John, (303)..., Jan 30 3:10 PM"/></div>
+          <div class="full"><label>Pickup details (who, contact, date/time)</label><input id="pickedUpDetails" value="${ea(v(row?.pickedUpDetails))}" placeholder="Picked up by John, (303)..., Jan 30 3:10 PM"/></div>
         `;
       }
 
       if(tabId === "lost"){
         modalForm.innerHTML = `
           <div><label>Item</label><input id="item" value="${ea(v(row?.item))}" placeholder="Wallet, Key, Phone"/></div>
-          <div><label>Owner/Guest</label><input id="owner" value="${ea(v(row?.owner))}" placeholder="Name"/></div>
-          <div class="full"><label>Contact details</label><input id="contact" value="${ea(v(row?.contact))}" placeholder="Phone or email"/></div>
+          <div><label>Owner</label><input id="owner" value="${ea(v(row?.owner))}" placeholder="Name"/></div>
+          <div class="full"><label>Contact</label><input id="contact" value="${ea(v(row?.contact))}" placeholder="Phone or email"/></div>
           <div><label>Lost date and time</label><input id="lostDateTime" value="${ea(v(row?.lostDateTime) || nowString())}"/></div>
-          <div><label>Where lost</label><input id="whereLost" value="${ea(v(row?.whereLost))}" placeholder="Hall lobby, Room 210"/></div>
-          <div class="full"><label>Notes</label><textarea id="notes" placeholder="Extra info to help find it">${e(v(row?.notes))}</textarea></div>
-          <div class="full"><label>Resolution update (when found, given to who, contact, where found)</label><textarea id="resolution" placeholder="Found in ..., returned to ..., contact ...">${e(v(row?.resolution))}</textarea></div>
-          <div><label>Mark as done</label>
+          <div><label>Where lost</label><input id="whereLost" value="${ea(v(row?.whereLost))}" placeholder="Lobby, Room 210"/></div>
+          <div class="full"><label>Notes</label><textarea id="notes" placeholder="Extra info">${e(v(row?.notes))}</textarea></div>
+          <div class="full"><label>Resolution update</label><textarea id="resolution" placeholder="Found in ..., returned to ...">${e(v(row?.resolution))}</textarea></div>
+          <div><label>Status</label>
             <select id="done">
               <option value="false">Open</option>
               <option value="true">Done</option>
             </select>
           </div>
-          <div><label>Optional internal tag</label><input id="tag" value="${ea(v(row?.tag))}" placeholder="FYI"/></div>
+          <div><label>Tag</label><input id="tag" value="${ea(v(row?.tag))}" placeholder="Optional"/></div>
         `;
       }
 
@@ -907,14 +1095,14 @@
           <div><label>Found date and time</label><input id="foundDateTime" value="${ea(v(row?.foundDateTime) || nowString())}"/></div>
           <div><label>Found where</label><input id="foundWhere" value="${ea(v(row?.foundWhere))}" placeholder="Front desk, Hall entry"/></div>
           <div><label>Added by</label><input id="addedBy" value="${ea(v(row?.addedBy))}" placeholder="Staff name"/></div>
-          <div class="full"><label>Notes</label><textarea id="notes" placeholder="Description, color, brand, etc">${e(v(row?.notes))}</textarea></div>
-          <div><label>Claimed</label>
+          <div class="full"><label>Notes</label><textarea id="notes" placeholder="Description">${e(v(row?.notes))}</textarea></div>
+          <div><label>Status</label>
             <select id="claimed">
               <option value="false">Unclaimed</option>
               <option value="true">Claimed</option>
             </select>
           </div>
-          <div class="full"><label>Claim details (who claimed, contact, date/time)</label><input id="claimDetails" value="${ea(v(row?.claimDetails))}" placeholder="Claimed by ..., (303)..., Jan 30 4:20 PM"/></div>
+          <div class="full"><label>Claim details</label><input id="claimDetails" value="${ea(v(row?.claimDetails))}" placeholder="Claimed by ..., contact ..., time"/></div>
         `;
       }
 
@@ -937,26 +1125,16 @@
         modalForm.innerHTML = `
           <div><label>Document name</label><input id="name" value="${ea(v(row?.name))}" placeholder="Emergency Contacts"/></div>
           <div><label>URL</label><input id="url" value="${ea(v(row?.url))}" placeholder="https://..."/></div>
-          <div class="full"><label>Notes</label><input id="notes" value="${ea(v(row?.notes))}" placeholder="What is this document for?"/></div>
+          <div class="full"><label>Notes</label><input id="notes" value="${ea(v(row?.notes))}" placeholder="What is this for?"/></div>
         `;
       }
 
       modal.classList.add("active");
 
-      // Preselect dropdown values for edit
-      if(tabId === "mailList"){
-        const picked = (row?.pickedUpDone ? "true" : "false");
-        document.getElementById("pickedUpDone").value = picked;
-      }
-      if(tabId === "lost"){
-        document.getElementById("done").value = (row?.done ? "true" : "false");
-      }
-      if(tabId === "found"){
-        document.getElementById("claimed").value = (row?.claimed ? "true" : "false");
-      }
-      if(tabId === "deskNotes"){
-        document.getElementById("priority").value = v(row?.priority) || "FYI";
-      }
+      if(tabId === "mailList") document.getElementById("pickedUpDone").value = (row?.pickedUpDone ? "true" : "false");
+      if(tabId === "lost") document.getElementById("done").value = (row?.done ? "true" : "false");
+      if(tabId === "found") document.getElementById("claimed").value = (row?.claimed ? "true" : "false");
+      if(tabId === "deskNotes") document.getElementById("priority").value = v(row?.priority) || "FYI";
 
       modalSave.onclick = () => saveModal(tabId, rowId);
     }
@@ -983,10 +1161,11 @@
       function upsert(obj){
         if(!rowId){
           obj._id = uid();
+          obj._ts = nowTs();
           rows.unshift(obj);
         } else {
           const idx = rows.findIndex(r => r._id === rowId);
-          if(idx >= 0) rows[idx] = { ...rows[idx], ...obj };
+          if(idx >= 0) rows[idx] = { ...rows[idx], ...obj, _ts: rows[idx]._ts || nowTs() };
         }
         all.halls[state.hall][tabId] = rows;
         store.saveAll(all);
@@ -1012,7 +1191,7 @@
         const storageLocation = readInput("storageLocation");
         const pickedUpDone = (readInput("pickedUpDone") === "true");
         const pickedUpDetails = readInput("pickedUpDetails");
-        if(!recipient || !receivedDateTime) return;
+        if(!recipient) return;
         upsert({ recipient, from, carrier, tracking, receivedDateTime, storageLocation, pickedUpDone, pickedUpDetails });
       }
 
@@ -1049,6 +1228,9 @@
         const message = readInput("message");
         if(!addedBy || !message) return;
         upsert({ addedBy, dateTime, priority, message });
+
+        // After adding a desk note, keep it "new" until user visits that hall notes
+        // so we do not auto mark seen here.
       }
 
       if(tabId === "docs"){
@@ -1060,7 +1242,7 @@
       }
 
       closeModal();
-      renderContent();
+      render();
     }
 
     /* ===========================
@@ -1074,7 +1256,7 @@
       const next = rows.filter(r => r._id !== rowId);
       all.halls[state.hall][tabId] = next;
       store.saveAll(all);
-      renderContent();
+      render();
     }
 
     function editRow(tabId, rowId){
@@ -1084,33 +1266,18 @@
     }
 
     /* ===========================
-       Export
+       Home actions
        =========================== */
 
-    function exportHall(){
-      const all = getHallData();
-      const hallObj = all.halls[state.hall] || {};
-      const payload = {
-        hall: state.hall,
-        exportedAt: new Date().toISOString(),
-        data: hallObj
-      };
-
-      const text = JSON.stringify(payload, null, 2);
-      const blob = new Blob([text], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = (state.hall.replace(/\s+/g,"_").toLowerCase()) + "_export.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
+    markSeenBtn.onclick = () => {
+      const feed = getAllDeskNotesFeed();
+      const latest = feed.reduce((m,n) => Math.max(m, Number(n._ts || 0)), 0);
+      if(latest > 0) seen.markAllSeen(latest);
+      render();
+    };
 
     /* ===========================
-       Public hooks for onclick
+       Public hooks
        =========================== */
 
     window.appPickHall = (hall) => routeToHall(hall);
@@ -1118,16 +1285,16 @@
     window.appDelete = (tab, id) => deleteRow(tab, id);
     window.appEdit = (tab, id) => editRow(tab, id);
 
+    window.appOpenHallNotes = (hall) => {
+      routeToHall(hall);
+      setTab("deskNotes");
+    };
+
     /* ===========================
        Boot
        =========================== */
 
     (function boot(){
-      const p = parseHash();
-      if(p.hall){
-        state.hall = p.hall;
-        state.tab = p.tab || "deskNotes";
-      }
       render();
     })();
   </script>
