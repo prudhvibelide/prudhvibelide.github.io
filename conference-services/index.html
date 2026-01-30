@@ -75,6 +75,23 @@
     .btn:hover{filter:brightness(1.06)}
     .btn:disabled{opacity:.55; cursor:not-allowed}
 
+/* Confetti burst */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 14px;
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.95;
+  transform: translate(-50%, -50%);
+  animation: confettiFly 900ms ease-out forwards;
+}
+@keyframes confettiFly {
+  0%   { transform: translate(-50%, -50%) translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+}
+
     /* Countdown */
     .countdown{
       display:flex; align-items:center; gap:10px;
@@ -601,6 +618,32 @@
       }
     };
 
+    function burstConfettiFrom(el) {
+  const r = el.getBoundingClientRect();
+  const x = r.left + r.width / 2;
+  const y = r.top + r.height / 2;
+
+  const colors = ["#cfb87c", "#bfa766", "#e9e9e9", "#3aafa9", "#e79a00"];
+  const pieces = 28;
+
+  for (let i = 0; i < pieces; i++) {
+    const d = document.createElement("div");
+    d.className = "confetti";
+    d.style.left = x + "px";
+    d.style.top = y + "px";
+    d.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    const dx = (Math.random() * 240 - 120) + "px";
+    const dy = (Math.random() * 220 - 140) + "px";
+    const rot = (Math.random() * 720 - 360) + "deg";
+    d.style.setProperty("--dx", dx);
+    d.style.setProperty("--dy", dy);
+    d.style.setProperty("--rot", rot);
+
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 950);
+  }
+}
     const state = { hall:null, tab:"deskNotes", search:"", editing:null };
 
     const homeView = document.getElementById("homeView");
@@ -654,11 +697,14 @@
       countdownTimeEl.textContent = `${days}d ${pad2(hrs)}:${pad2(mins)}:${pad2(s)}`;
     }
 
-    countdownEl.addEventListener("click", () => {
-      countdownEl.classList.remove("celebrate");
-      void countdownEl.offsetWidth;
-      countdownEl.classList.add("celebrate");
-    });
+  countdownEl.addEventListener("click", () => {
+  countdownEl.classList.remove("celebrate");
+  void countdownEl.offsetWidth;
+  countdownEl.classList.add("celebrate");
+
+  burstConfettiFrom(countdownEl);
+});
+
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
